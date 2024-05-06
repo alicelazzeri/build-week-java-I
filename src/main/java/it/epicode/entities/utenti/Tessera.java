@@ -21,4 +21,36 @@ public class Tessera {
         this.inizioValidità = inizioValidità;
         this.fineValidità =  inizioValidità.plusDays(365);
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDate getInizioValidità() {
+        return inizioValidità;
+    }
+
+    public void setInizioValidità(LocalDate inizioValidità) {
+        this.inizioValidità = inizioValidità;
+    }
+
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
+    public LocalDate getFineValidità() {
+        return fineValidità;
+    }
+
+    public void setFineValidità(LocalDate fineValidità) {
+        this.fineValidità = fineValidità;
+    }
 }

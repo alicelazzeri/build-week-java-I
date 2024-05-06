@@ -8,20 +8,34 @@ import jakarta.persistence.Table;
 @Table (name = "distributori_automatici")
 @DiscriminatorValue("DA")
 public class DistributoreAutomatico extends Distributore {
-    private boolean isActive;
+    // private boolean isActive;
 
-    public DistributoreAutomatico(boolean isActive) {
-        this.isActive = isActive;
+    private StatoDistributore statoDistributore;
+
+    public DistributoreAutomatico(StatoDistributore statoDistributore) {
+        this.statoDistributore = statoDistributore;
     }
 
     public DistributoreAutomatico() {
     }
 
-    public boolean isActive() {
-        return isActive;
+    public StatoDistributore getStatoDistributore() {
+        return statoDistributore;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setStatoDistributore(StatoDistributore statoDistributore) {
+        this.statoDistributore = statoDistributore;
     }
+
+    //    public DistributoreAutomatico(boolean isActive) {
+//        this.isActive = isActive;
+//    }
+//
+//    public boolean isActive() {
+//        return isActive;
+//    }
+//
+//    public void setActive(boolean active) {
+//        isActive = active;
+//    }
 }

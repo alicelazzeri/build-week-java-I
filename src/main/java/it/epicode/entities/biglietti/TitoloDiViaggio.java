@@ -1,10 +1,12 @@
 package it.epicode.entities.biglietti;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
-@MappedSuperclass
+@Entity
+@Table(name = "titoli_di_viaggio")
+@Inheritance (strategy = InheritanceType.JOINED)
+@DiscriminatorColumn (name = "dati_titolo_viaggio", discriminatorType = DiscriminatorType.STRING)
+
 public class TitoloDiViaggio {
     @Id
     @GeneratedValue

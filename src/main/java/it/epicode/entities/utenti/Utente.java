@@ -9,16 +9,14 @@ public class Utente {
     @GeneratedValue
     private long id;
 
-    private long numeroTessera;
 
     private String nominativo;
 
     @OneToOne(mappedBy = "utente")
     private Tessera tessera;
 
-    public Utente(long id, long numeroTessera, String nominativo, Tessera tessera) {
+    public Utente(long id, String nominativo, Tessera tessera) {
         this.id = id;
-        this.numeroTessera = numeroTessera;
         this.nominativo = nominativo;
         this.tessera = tessera;
     }
@@ -26,13 +24,6 @@ public class Utente {
     public Utente() {
     }
 
-    public long getNumeroTessera() {
-        return numeroTessera;
-    }
-
-    public void setNumeroTessera(long numeroTessera) {
-        this.numeroTessera = numeroTessera;
-    }
 
     public long getId() {
         return id;

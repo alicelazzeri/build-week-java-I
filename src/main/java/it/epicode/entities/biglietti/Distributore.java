@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 @Table (name = "rivenditori")
 @Inheritance (strategy = InheritanceType.JOINED)
-@DiscriminatorColumn (name = "data_type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn (name = "dati_distributore", discriminatorType = DiscriminatorType.STRING)
 
 public abstract class Distributore {
     @Id
@@ -27,5 +27,10 @@ public abstract class Distributore {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Distributore(Biglietto biglietti, Abbonamento abbonamenti) {
+        this.biglietti = (List<Biglietto>) biglietti;
+        this.abbonamenti = abbonamenti;
     }
 }
