@@ -12,7 +12,8 @@ public class DistributoreAutomatico extends Distributore {
 
     private StatoDistributore statoDistributore;
 
-    public DistributoreAutomatico(StatoDistributore statoDistributore) {
+    public DistributoreAutomatico(TitoloDiViaggio titoloViaggi, StatoDistributore statoDistributore) {
+        super(titoloViaggi);
         this.statoDistributore = statoDistributore;
     }
 
@@ -26,6 +27,9 @@ public class DistributoreAutomatico extends Distributore {
     public void setStatoDistributore(StatoDistributore statoDistributore) {
         this.statoDistributore = statoDistributore;
     }
+
+
+
 
     //    public DistributoreAutomatico(boolean isActive) {
 //        this.isActive = isActive;

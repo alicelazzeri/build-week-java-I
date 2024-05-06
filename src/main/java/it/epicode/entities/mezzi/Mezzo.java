@@ -23,7 +23,9 @@ public abstract class Mezzo {
     private LocalDate finePeriodoManutenzione;
     private Period periodoManutenzione;
 
-    public Mezzo(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio, LocalDate finePeriodoServizio, Period periodoServizio, LocalDate inizioPeriodoManutenzione, LocalDate finePeriodoManutenzione, Period periodoManutenzione) {
+    public Mezzo(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio,
+                    LocalDate finePeriodoServizio, Period periodoServizio, LocalDate inizioPeriodoManutenzione,
+                    LocalDate finePeriodoManutenzione, Period periodoManutenzione) {
         this.capienzaMax = capienzaMax;
         this.statoMezzo = statoMezzo;
         this.inizioPeriodoServizio = inizioPeriodoServizio;
@@ -37,4 +39,83 @@ public abstract class Mezzo {
     public Mezzo() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getCapienzaMax() {
+        return capienzaMax;
+    }
+
+    public void setCapienzaMax(int capienzaMax) {
+        this.capienzaMax = capienzaMax;
+    }
+
+    public StatoMezzo getStatoMezzo() {
+        return statoMezzo;
+    }
+
+    public void setStatoMezzo(StatoMezzo statoMezzo) {
+        this.statoMezzo = statoMezzo;
+    }
+
+    public LocalDate getInizioPeriodoServizio() {
+        return inizioPeriodoServizio;
+    }
+
+    public void setInizioPeriodoServizio(LocalDate inizioPeriodoServizio) {
+        this.inizioPeriodoServizio = inizioPeriodoServizio;
+    }
+
+    public LocalDate getFinePeriodoServizio() {
+        return finePeriodoServizio;
+    }
+
+    public void setFinePeriodoServizio(LocalDate finePeriodoServizio) {
+        this.finePeriodoServizio = finePeriodoServizio;
+    }
+
+    public Period getPeriodoServizio() {
+        return periodoServizio;
+    }
+
+    public void setPeriodoServizio(Period periodoServizio) {
+        this.periodoServizio = periodoServizio;
+    }
+
+    public LocalDate getInizioPeriodoManutenzione() {
+        return inizioPeriodoManutenzione;
+    }
+
+    public void setInizioPeriodoManutenzione(LocalDate inizioPeriodoManutenzione) {
+        this.inizioPeriodoManutenzione = inizioPeriodoManutenzione;
+    }
+
+    public LocalDate getFinePeriodoManutenzione() {
+        return finePeriodoManutenzione;
+    }
+
+    public void setFinePeriodoManutenzione(LocalDate finePeriodoManutenzione) {
+        this.finePeriodoManutenzione = finePeriodoManutenzione;
+    }
+
+    public Period getPeriodoManutenzione() {
+        return periodoManutenzione;
+    }
+
+    public void setPeriodoManutenzione(Period periodoManutenzione) {
+        this.periodoManutenzione = periodoManutenzione;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Mezzo: [id=%s, statoMezzo=%s, inizioPeriodoServizio=%s, finePeriodoServizio=%s," +
+                        " periodoServizio=%s,inizioPeriodoManutenzione=%s, finePeriodoManutenzione=%s,periodoManutenzione=%s]",
+                id, statoMezzo, inizioPeriodoServizio, finePeriodoServizio,periodoServizio,
+                inizioPeriodoManutenzione,finePeriodoManutenzione,periodoManutenzione );
+    }
 }

@@ -11,8 +11,8 @@ import java.util.List;
 @DiscriminatorValue("RA")
 public class RivenditoreAutorizzato extends Distributore {
 
-    public RivenditoreAutorizzato(Biglietto biglietto, Abbonamento abbonamento) {
-        super(biglietto, abbonamento);
+    public RivenditoreAutorizzato(TitoloDiViaggio titoloViaggi) {
+        super(titoloViaggi);
     }
 
 }

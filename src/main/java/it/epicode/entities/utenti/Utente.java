@@ -8,17 +8,14 @@ public class Utente {
     @Id
     @GeneratedValue
     private long id;
-
-
     private String nominativo;
 
     @OneToOne(mappedBy = "utente")
     private Tessera tessera;
 
-    public Utente(long id, String nominativo, Tessera tessera) {
-        this.id = id;
+    public Utente(String nominativo) {
         this.nominativo = nominativo;
-        this.tessera = tessera;
+
     }
 
     public Utente() {
