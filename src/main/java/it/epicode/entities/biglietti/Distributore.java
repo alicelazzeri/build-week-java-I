@@ -29,8 +29,9 @@ public abstract class Distributore {
         this.id = id;
     }
 
-    public Distributore(Biglietto biglietti, Abbonamento abbonamenti) {
-        this.biglietti = (List<Biglietto>) biglietti;
-        this.abbonamenti = abbonamenti;
+    public Distributore(Biglietto biglietto, Abbonamento abbonamento) {
+        this.biglietti.add(biglietto);
+        this.abbonamenti.add(abbonamento);
+
     }
 }
