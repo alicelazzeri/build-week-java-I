@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table (name = "distributori_automatici")
 @DiscriminatorValue("DA")
-public class DistributoreAutomatico extends Rivenditore {
+public class DistributoreAutomatico extends Distributore {
     private boolean isActive;
 
     public DistributoreAutomatico(boolean isActive) {

@@ -7,5 +7,5 @@ import jakarta.persistence.Table;
 @Entity
 @Table (name ="rivenditori_autorizzati")
 @DiscriminatorValue("RA")
-public class RivenditoreAutorizzato extends Rivenditore {
+public class RivenditoreAutorizzato extends Distributore {
 }
