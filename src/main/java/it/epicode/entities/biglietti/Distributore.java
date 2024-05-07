@@ -16,11 +16,13 @@ public abstract class Distributore {
     private long id;
 
     @OneToMany(mappedBy = "distributore")
-    private List<Biglietto> biglietti = new ArrayList<>();
+    private List<TitoloDiViaggio> titoloViaggio = new ArrayList<>();
 
-    @OneToMany(mappedBy = "distributore")
-    private List<Abbonamento> abbonamenti = new ArrayList<>();
+    public Distributore(TitoloDiViaggio titoloViaggi) {
+        this.titoloViaggio.add(titoloViaggi);
+    }
 
+    public Distributore(){}
     public long getId() {
         return id;
     }
@@ -29,8 +31,11 @@ public abstract class Distributore {
         this.id = id;
     }
 
-    public Distributore(Biglietto biglietti, Abbonamento abbonamenti) {
-        this.biglietti = (List<Biglietto>) biglietti;
-        this.abbonamenti = abbonamenti;
+    public List<TitoloDiViaggio> getTitoloViaggio() {
+        return titoloViaggio;
+    }
+
+    public void setTitoloViaggio(List<TitoloDiViaggio> titoloViaggio) {
+        this.titoloViaggio = titoloViaggio;
     }
 }

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class Tessera {
     @Id
     @GeneratedValue
+    @Column (name = "numero_tessera")
     private long id;
     private LocalDate inizioValidità;
     private LocalDate fineValidità;
@@ -17,7 +18,8 @@ public class Tessera {
     @JoinColumn(name = "id_utente")
     private Utente utente;
 
-    public Tessera(LocalDate inizioValidità, LocalDate fineValidità) {
+    public Tessera(Utente ut,LocalDate inizioValidità, LocalDate fineValidità) {
+        this.utente = ut;
         this.inizioValidità = inizioValidità;
         this.fineValidità =  inizioValidità.plusDays(365);
     }
