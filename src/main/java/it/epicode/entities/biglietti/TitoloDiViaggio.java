@@ -1,5 +1,7 @@
 package it.epicode.entities.biglietti;
 
+import it.epicode.entities.utenti.Tessera;
+import it.epicode.entities.utenti.Utente;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,8 +20,8 @@ public abstract class TitoloDiViaggio {
 
 
 
-
     public TitoloDiViaggio() {
+
     }
 
     public TitoloDiViaggio(long id) {

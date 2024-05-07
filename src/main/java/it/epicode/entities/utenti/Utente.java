@@ -1,5 +1,6 @@
 package it.epicode.entities.utenti;
 
+import it.epicode.entities.biglietti.Abbonamento;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,9 @@ public class Utente {
 
     @OneToOne(mappedBy = "utente")
     private Tessera tessera;
+
+    @OneToOne(mappedBy = "utente")
+    private Abbonamento abbonamento;
 
     public Utente(String nominativo) {
         this.nominativo = nominativo;

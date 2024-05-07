@@ -8,7 +8,10 @@ import jakarta.persistence.*;
 
 public class Biglietto extends TitoloDiViaggio {
 
-    private StatoBiglietto statoBiglietto;
+    @Enumerated(EnumType.STRING)
+    private StatoBiglietto statoBiglietto = StatoBiglietto.NON_VIDIMATO ;
+
+
 
     public Biglietto() {
 

@@ -1,5 +1,6 @@
 package it.epicode.entities.utenti;
 
+import it.epicode.entities.biglietti.Abbonamento;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,6 +18,9 @@ public class Tessera {
     @OneToOne
     @JoinColumn(name = "id_utente")
     private Utente utente;
+
+    @OneToOne(mappedBy = "tessera")
+    private Abbonamento abbonamento;
 
     public Tessera(Utente ut,LocalDate inizioValidità, LocalDate fineValidità) {
         this.utente = ut;

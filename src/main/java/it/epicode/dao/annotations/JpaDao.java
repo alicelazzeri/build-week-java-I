@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 public class JpaDao implements DistributoreDao {
 
-    EntityManager em;
+    private EntityManager em;
     public static final Logger logger = LoggerFactory.getLogger(JpaDao.class);
     public JpaDao(EntityManager em) {
         this.em = em;
