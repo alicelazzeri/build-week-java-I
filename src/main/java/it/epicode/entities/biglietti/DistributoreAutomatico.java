@@ -1,8 +1,6 @@
 package it.epicode.entities.biglietti;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table (name = "distributori_automatici")
@@ -10,6 +8,7 @@ import jakarta.persistence.Table;
 public class DistributoreAutomatico extends Distributore {
     // private boolean isActive;
 
+    @Enumerated(EnumType.STRING)
     private StatoDistributore statoDistributore;
 
     public DistributoreAutomatico(TitoloDiViaggio titoloViaggi, StatoDistributore statoDistributore) {
