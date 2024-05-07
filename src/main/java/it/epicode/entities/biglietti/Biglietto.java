@@ -11,6 +11,11 @@ public class Biglietto extends TitoloDiViaggio {
     @Enumerated(EnumType.STRING)
     private StatoBiglietto statoBiglietto = StatoBiglietto.NON_VIDIMATO ;
 
+    public Biglietto(long id, StatoBiglietto statoBiglietto) {
+        super(id);
+        this.statoBiglietto = statoBiglietto;
+    }
+
     public Biglietto() {
 
     }

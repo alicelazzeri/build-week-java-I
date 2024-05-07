@@ -8,8 +8,8 @@ import jakarta.persistence.*;
 public class DistributoreAutomatico extends Distributore {
     // private boolean isActive;
 
-    @Enumerated(EnumType.STRING)
-    private StatoDistributore statoDistributore;
+    @Enumerated
+    private StatoDistributore statoDistributore = StatoDistributore.ATTIVO;
 
     public DistributoreAutomatico(TitoloDiViaggio titoloViaggi, StatoDistributore statoDistributore) {
         super(titoloViaggi);
