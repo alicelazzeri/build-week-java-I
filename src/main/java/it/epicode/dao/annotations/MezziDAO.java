@@ -7,5 +7,5 @@ import org.slf4j.LoggerFactory;
 public class MezziDAO {
 
     private EntityManager em;
-    public static final Logger logger = LoggerFactory.getLogger(JpaDao.class);
+    public static final Logger logger = LoggerFactory.getLogger(TitoloViaggioDAO.class);
 }

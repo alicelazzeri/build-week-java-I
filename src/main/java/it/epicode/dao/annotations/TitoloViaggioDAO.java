@@ -11,18 +11,18 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 
 
-public class JpaDao implements DistributoreDao {
+public class TitoloViaggioDAO implements DistributoreDao {
 
     private EntityManager em;
-    public static final Logger logger = LoggerFactory.getLogger(JpaDao.class);
-    public JpaDao(EntityManager em) {
+    public static final Logger logger = LoggerFactory.getLogger(TitoloViaggioDAO.class);
+    public TitoloViaggioDAO(EntityManager em) {
         this.em = em;
     }
 
-    public void save(Object o){
+    public void save(TitoloDiViaggio t){
         try{
             em.getTransaction().begin();
-            em.persist(o);
+            em.persist(t);
             em.getTransaction().commit();
         }catch (Exception e){
             logger.error("Elemento non salvato", e);

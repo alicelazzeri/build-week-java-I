@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 public class DistributoreDAO {
 
     private EntityManager em;
-    public static final Logger logger = LoggerFactory.getLogger(JpaDao.class);
+    public static final Logger logger = LoggerFactory.getLogger(TitoloViaggioDAO.class);
 
     public DistributoreDAO(EntityManager em) {
         this.em = em;
@@ -24,4 +24,6 @@ public class DistributoreDAO {
             em.getTransaction().rollback();
         }
     }
+
+
 }
