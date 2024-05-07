@@ -22,7 +22,7 @@ public class Tessera {
     @OneToOne(mappedBy = "tessera")
     private Abbonamento abbonamento;
 
-    public Tessera(Utente ut,LocalDate inizioValidità, LocalDate fineValidità) {
+    public Tessera(Utente ut,LocalDate inizioValidità) {
         this.utente = ut;
         this.inizioValidità = inizioValidità;
         this.fineValidità =  inizioValidità.plusDays(365);

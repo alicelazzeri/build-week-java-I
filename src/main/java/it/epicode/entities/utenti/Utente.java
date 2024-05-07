@@ -11,20 +11,18 @@ public class Utente {
     private long id;
     private String nominativo;
 
-    @OneToOne(mappedBy = "utente")
+    @OneToOne (mappedBy = "utente")
     private Tessera tessera;
 
-    @OneToOne(mappedBy = "utente")
+    @OneToOne (mappedBy = "utente")
     private Abbonamento abbonamento;
 
     public Utente(String nominativo) {
         this.nominativo = nominativo;
-
     }
 
     public Utente() {
     }
-
 
     public long getId() {
         return id;
@@ -42,12 +40,18 @@ public class Utente {
         this.nominativo = nominativo;
     }
 
-
     public Tessera getTessera() {
         return tessera;
     }
 
     public void setTessera(Tessera tessera) {
         this.tessera = tessera;
+    }
+
+    public Abbonamento getAbbonamento() {
+        return abbonamento;
+    }
+    public void setAbbonamento(Abbonamento abbonamento) {
+        this.abbonamento = abbonamento;
     }
 }
