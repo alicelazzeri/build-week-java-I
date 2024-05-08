@@ -13,8 +13,12 @@ import java.time.LocalDate;
 public class Autobus extends Mezzo {
 
 
-    public Autobus(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio, LocalDate finePeriodoServizio, LocalDate inizioPeriodoManutenzione, LocalDate finePeriodoManutenzione, Tratta tratta) {
+    public Autobus(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio, LocalDate finePeriodoServizio, Tratta tratta) {
         super(capienzaMax, statoMezzo, inizioPeriodoServizio, finePeriodoServizio, tratta);
+    }
+
+    public Autobus(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoManutenzione, LocalDate finePeriodoManutenzione) {
+        super(capienzaMax, statoMezzo, inizioPeriodoManutenzione, finePeriodoManutenzione);
     }
 
     public Autobus(){}

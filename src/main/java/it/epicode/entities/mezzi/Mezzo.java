@@ -15,6 +15,8 @@ public abstract class Mezzo {
     private long id;
 
     private int capienzaMax;
+
+    @Enumerated(EnumType.STRING)
     private StatoMezzo statoMezzo;
     private LocalDate inizioPeriodoServizio;
     private LocalDate finePeriodoServizio;
@@ -34,20 +36,23 @@ public abstract class Mezzo {
         this.inizioPeriodoServizio = inizioPeriodoServizio;
         this.finePeriodoServizio = finePeriodoServizio;
         this.periodoServizio = Period.between(inizioPeriodoServizio, finePeriodoServizio);
-        this.tratta = tratta;
-    }
-
-    public Mezzo(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoManutenzione,
-                 LocalDate finePeriodoManutenzione,Tratta tratta) {
-        this.capienzaMax = capienzaMax;
-        this.statoMezzo = statoMezzo;
-        this.inizioPeriodoManutenzione = inizioPeriodoManutenzione;
-        this.finePeriodoManutenzione = finePeriodoManutenzione;
+        this.inizioPeriodoManutenzione = LocalDate.of(1,1,1);
+        this.finePeriodoManutenzione = LocalDate.of(1,1,1);
         this.periodoManutenzione = Period.between(inizioPeriodoManutenzione, finePeriodoManutenzione);
         this.tratta = tratta;
     }
 
-
+    public Mezzo(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoManutenzione,
+                 LocalDate finePeriodoManutenzione) {
+        this.statoMezzo = statoMezzo;
+        this.inizioPeriodoManutenzione = inizioPeriodoManutenzione;
+        this.finePeriodoManutenzione = finePeriodoManutenzione;
+        this.periodoManutenzione = Period.between(inizioPeriodoManutenzione, finePeriodoManutenzione);
+        this.inizioPeriodoServizio = LocalDate.of(1,1,1);
+        this.finePeriodoServizio = LocalDate.of(1,1,1);
+        this.periodoServizio = Period.between(inizioPeriodoServizio, finePeriodoServizio);
+        this.tratta = tratta;
+    }
 
     public Mezzo() {
     }

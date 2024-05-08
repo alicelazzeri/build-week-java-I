@@ -1,8 +1,10 @@
 package it.epicode.dao.annotations;
 
 import it.epicode.dao.DistributoreDao;
+import it.epicode.entities.biglietti.Biglietto;
 import it.epicode.entities.biglietti.Distributore;
 import it.epicode.entities.biglietti.TitoloDiViaggio;
+import it.epicode.entities.mezzi.Mezzo;
 import it.epicode.entities.utenti.Tessera;
 import jakarta.persistence.EntityManager;
 import org.slf4j.Logger;
@@ -30,6 +32,16 @@ public class TitoloViaggioDAO implements DistributoreDao {
             em.getTransaction().rollback();
         }
         }
+
+    public void cercaBiglietto(long numeroBiglietto){
+        Biglietto biglietto = em.find(Biglietto.class, numeroBiglietto);
+        if (biglietto!= null) {
+            logger.debug("biglietto trovato {}", biglietto);
+        } else {
+            logger.debug("biglietto non trovato");
+        }
+
+    }
 
 
 

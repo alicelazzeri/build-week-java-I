@@ -12,8 +12,12 @@ import java.time.LocalDate;
 
 public class Tram extends Mezzo {
 
-    public Tram(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio, LocalDate finePeriodoServizio, LocalDate inizioPeriodoManutenzione, LocalDate finePeriodoManutenzione, Tratta tratta) {
+    public Tram(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio, LocalDate finePeriodoServizio, Tratta tratta) {
         super(capienzaMax, statoMezzo, inizioPeriodoServizio, finePeriodoServizio, tratta);
+    }
+
+    public Tram(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoManutenzione, LocalDate finePeriodoManutenzione) {
+        super(capienzaMax, statoMezzo, inizioPeriodoManutenzione, finePeriodoManutenzione);
     }
 
     public Tram() {
