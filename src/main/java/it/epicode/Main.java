@@ -20,6 +20,7 @@ import jdk.swing.interop.SwingInterOpUtils;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -61,8 +62,16 @@ public class Main {
         // daoMezzi.vidimaBiglietto(bigl3);
 
         // jpa.save(bigl6);
-        daoMezzi.vidimaBiglietto(bigl6);
+        // daoMezzi.vidimaBiglietto(bigl6);
 
+
+        LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
+        LocalDate dataFinale = LocalDate.now();
+
+        List<TitoloDiViaggio> titoliViaggio = jpa.ricercaTitoliViaggioTotaliPerDistributore(dataIniziale, dataFinale);
+        for (TitoloDiViaggio titoloViaggio : titoliViaggio) {
+            System.out.println(titoliViaggio);
+        }
 
 
     }

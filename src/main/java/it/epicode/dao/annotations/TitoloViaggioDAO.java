@@ -8,13 +8,15 @@ import it.epicode.entities.mezzi.Mezzo;
 import it.epicode.entities.utenti.Tessera;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
-public class TitoloViaggioDAO implements DistributoreDao {
+public class TitoloViaggioDAO {
 
     private EntityManager em;
     public static final Logger logger = LoggerFactory.getLogger(TitoloViaggioDAO.class);
@@ -62,25 +64,12 @@ public class TitoloViaggioDAO implements DistributoreDao {
         }
     }
 
-
-    @Override
-    public void emettiTitoloDiViaggio(TitoloDiViaggio titoloDiViaggio) {
-
-    }
-
-    @Override
-    public void conteggioTitoliTotali(TitoloDiViaggio titoloDiViaggio) {
-
-    }
-
-    @Override
-    public void conteggioTitoli(Distributore distributore, TitoloDiViaggio titoloDiViaggio, LocalDate inizioRicerca, LocalDate fineRicerca) {
-
-    }
-
-    @Override
-    public void validaAbbonamento(Tessera tessera, TitoloDiViaggio titoloDiViaggio) {
-
+    public List<TitoloDiViaggio> ricercaTitoliViaggioTotaliPerDistributore(LocalDate dataIniziale, LocalDate dataFinale) {
+            Query query = em.createQuery("SELECT COUNT(tv) FROM TitoloDiViaggio tv WHERE tv.dataEmissione BETWEEN :dataIniziale AND :dataFinale GROUP BY tv.distributore", TitoloDiViaggio.class);
+            query.setParameter("dataIniziale", dataIniziale);
+            query.setParameter("dataFinale", dataFinale);
+            var result = query.getResultList();
+            return result;
     }
 }
 
