@@ -46,17 +46,22 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Abbonamento a = new Abbonamento();
         int choice = 0;
+        String input;
         do {
-
-            System.out.println("Scegli dove emettere il biglietto o l'abbonamento:");
-            System.out.println("1. Ricevitoria");
+            System.out.println("Scegli dove acquistare il biglietto o l'abbonamento:");
+            System.out.println("---------------------------");
+            System.out.println("1. Rivenditore autorizzato");
             System.out.println("2. Distributore Automatico");
-            System.out.println("3. Esci");
+            System.out.println("3. Salve e arrivederci");
+            System.out.println("---------------------------");
             choice = scanner.nextInt();
             switch (choice){
                 case 1:
+                    System.out.println("RIVENDITORE AUTORIZZATO");
+                    System.out.println("---------------------------");
                     System.out.println("1. Emetti biglietto");
                     System.out.println("2. Emetti abbonamento");
+                    System.out.println("---------------------------");
                     choice = scanner.nextInt();
                     switch(choice) {
                         case 1:
@@ -70,8 +75,11 @@ public class Main {
                                 break;
                     }
                 case 2:
+                    System.out.println("DISTRIBUTORE AUTOMATICO");
+                    System.out.println("---------------------------");
                     System.out.println("1. Emetti biglietto");
                     System.out.println("2. Emetti abbonamento");
+                    System.out.println("---------------------------");
                     choice = scanner.nextInt();
                     switch(choice) {
                         case 1:
@@ -85,10 +93,14 @@ public class Main {
                                 break;
                     }
                 default:
-                    System.out.println("Scelta non valida");
+                    System.out.println("--");
                     break;
             }
-        }while (choice != 3);
+            System.out.println("Vuoi acquistare altri biglietti o abbonamenti? (sì/no)");
+            System.out.println("---------------------------\n");
+            input = scanner.nextLine().toLowerCase();
+        }while (!input.equals("no"));
+        scanner.close();
     }
 
     public static void ricevitoria(){
@@ -130,21 +142,22 @@ public class Main {
 
     public static Abbonamento creaAbbonamento(){
     Scanner scanner = new Scanner(System.in);
-        int choice = 0;
+
         UtentiDAO dao = new UtentiDAO(emf.createEntityManager());
         TitoloViaggioDAO tDao = new TitoloViaggioDAO(emf.createEntityManager());
         System.out.println("Inserisci il nome dell'utente: ");
         String nome = scanner.nextLine();
         Utente u = new Utente(nome);
         dao.save(u);
+
         Tessera t = new Tessera(u,LocalDate.now());
         dao.saveTessera(t);
-        scanner.nextLine();
+
+        //scanner.nextLine();
         System.out.println("Scegli il tipo di abbonamento: ");
         System.out.println("1. Settimanale");
         System.out.println("2. Mensile");
-        System.out.println("3. Esci");
-        choice = Integer.parseInt(scanner.nextLine());
+        int choice = Integer.parseInt(scanner.nextLine());
             TipoAbbonamento sm =switch (choice){
                 case 1 -> TipoAbbonamento.SETTIMANALE;
                 case 2 -> TipoAbbonamento.MENSILE;
