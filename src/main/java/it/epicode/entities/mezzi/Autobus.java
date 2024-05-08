@@ -1,14 +1,22 @@
 package it.epicode.entities.mezzi;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
-import java.time.Period;
+
+@Entity
+@Table(name = "autobus")
+@DiscriminatorValue("A")
 
 public class Autobus extends Mezzo {
 
 
-    public Autobus(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio, LocalDate finePeriodoServizio, Period periodoServizio, LocalDate inizioPeriodoManutenzione, LocalDate finePeriodoManutenzione, Period periodoManutenzione) {
-        super(capienzaMax, statoMezzo, inizioPeriodoServizio, finePeriodoServizio, periodoServizio, inizioPeriodoManutenzione, finePeriodoManutenzione, periodoManutenzione);
+    public Autobus(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio, LocalDate finePeriodoServizio, LocalDate inizioPeriodoManutenzione, LocalDate finePeriodoManutenzione, Tratta tratta) {
+        super(capienzaMax, statoMezzo, inizioPeriodoServizio, finePeriodoServizio, tratta);
     }
+
     public Autobus(){}
 
 }

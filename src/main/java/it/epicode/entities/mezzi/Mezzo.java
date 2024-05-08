@@ -23,18 +23,31 @@ public abstract class Mezzo {
     private LocalDate finePeriodoManutenzione;
     private Period periodoManutenzione;
 
+    @ManyToOne
+    @JoinColumn(name ="id_tratta")
+    private Tratta tratta;
+
     public Mezzo(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio,
-                    LocalDate finePeriodoServizio, Period periodoServizio, LocalDate inizioPeriodoManutenzione,
-                    LocalDate finePeriodoManutenzione, Period periodoManutenzione) {
+                    LocalDate finePeriodoServizio,Tratta tratta) {
         this.capienzaMax = capienzaMax;
         this.statoMezzo = statoMezzo;
         this.inizioPeriodoServizio = inizioPeriodoServizio;
         this.finePeriodoServizio = finePeriodoServizio;
         this.periodoServizio = Period.between(inizioPeriodoServizio, finePeriodoServizio);
+        this.tratta = tratta;
+    }
+
+    public Mezzo(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoManutenzione,
+                 LocalDate finePeriodoManutenzione,Tratta tratta) {
+        this.capienzaMax = capienzaMax;
+        this.statoMezzo = statoMezzo;
         this.inizioPeriodoManutenzione = inizioPeriodoManutenzione;
         this.finePeriodoManutenzione = finePeriodoManutenzione;
         this.periodoManutenzione = Period.between(inizioPeriodoManutenzione, finePeriodoManutenzione);
+        this.tratta = tratta;
     }
+
+
 
     public Mezzo() {
     }
@@ -109,6 +122,14 @@ public abstract class Mezzo {
 
     public void setPeriodoManutenzione(Period periodoManutenzione) {
         this.periodoManutenzione = periodoManutenzione;
+    }
+
+    public Tratta getTratta() {
+        return tratta;
+    }
+
+    public void setTratta(Tratta tratta) {
+        this.tratta = tratta;
     }
 
     @Override
