@@ -24,6 +24,7 @@ public class TitoloViaggioDAO implements DistributoreDao {
             em.getTransaction().begin();
             em.persist(t);
             em.getTransaction().commit();
+            System.out.println("Titolo di viaggio creato correttamente");
         }catch (Exception e){
             logger.error("Elemento non salvato", e);
             em.getTransaction().rollback();
