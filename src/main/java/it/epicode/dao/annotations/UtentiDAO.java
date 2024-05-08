@@ -21,7 +21,7 @@ public class UtentiDAO {
             em.getTransaction().begin();
             em.persist(u);
             em.getTransaction().commit();
-            System.out.println("Utente salvato correttamente");
+            System.out.println("Utente salvato correttamente\n");
         }catch (Exception e){
             logger.error("Utente non salvato", e);
             em.getTransaction().rollback();
@@ -32,7 +32,7 @@ public class UtentiDAO {
             em.getTransaction().begin();
             em.persist(t);
             em.getTransaction().commit();
-            System.out.println("Tessera salvata correttamente");
+            System.out.println("Tessera salvata correttamente\n");
         }catch (Exception e){
             logger.error("Tessera non salvata", e);
             em.getTransaction().rollback();
