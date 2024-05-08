@@ -7,6 +7,7 @@ import it.epicode.entities.biglietti.TitoloDiViaggio;
 import it.epicode.entities.mezzi.Mezzo;
 import it.epicode.entities.utenti.Tessera;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,16 +34,33 @@ public class TitoloViaggioDAO implements DistributoreDao {
         }
         }
 
-    public void cercaBiglietto(long numeroBiglietto){
+    public Biglietto cercaBiglietto(long numeroBiglietto){
         Biglietto biglietto = em.find(Biglietto.class, numeroBiglietto);
         if (biglietto!= null) {
             logger.debug("biglietto trovato {}", biglietto);
         } else {
             logger.debug("biglietto non trovato");
         }
-
+        return biglietto;
     }
 
+    public void deleteBiglietto(long numeroBiglietto) {
+        EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            Biglietto b = cercaBiglietto(numeroBiglietto);
+            if (b != null) {
+                em.remove(b);
+                trans.commit();
+                logger.debug("Biglietto eliminaro {}", b);
+            } else {
+                logger.debug("Biglietto non trovato {}", b);
+            }
+        } catch (Exception e) {
+            trans.rollback();
+            logger.error("Errore durante l'eliminazione del biglietto", e);
+        }
+    }
 
 
     @Override

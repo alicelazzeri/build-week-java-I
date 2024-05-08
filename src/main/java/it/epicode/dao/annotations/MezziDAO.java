@@ -1,9 +1,12 @@
 package it.epicode.dao.annotations;
 
+import it.epicode.entities.biglietti.Biglietto;
+import it.epicode.entities.biglietti.StatoBiglietto;
 import it.epicode.entities.mezzi.Mezzo;
 import it.epicode.entities.mezzi.Tratta;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,5 +45,28 @@ public class MezziDAO {
         }
     }
 
+    public Biglietto vidimaBiglietto(Biglietto biglietto) {
+        EntityTransaction trans = em.getTransaction();
+        TitoloViaggioDAO dao = new TitoloViaggioDAO(em);
+        dao.cercaBiglietto(biglietto.getNumeroBiglietto());
+        try {
+            if (biglietto.equals(StatoBiglietto.VIDIMATO)) {
+                logger.debug("Biglietto già utilizzato");
+            } else {
+                biglietto.setStatoBiglietto(StatoBiglietto.VIDIMATO);
+                logger.debug("Biglietto per il viaggio corrente vidimato");
+                dao.deleteBiglietto(biglietto.getNumeroBiglietto());
+                dao.save(biglietto);
+            }
+            //Query query = em.createQuery("SELECT ");
+        } catch(Exception e) {
+            logger.error("Errore nella vidimazione del biglietto", e);
+        }
+        return biglietto;
+    }
+
+
+
+    // select b from titolidiviaggio where b.stato like 'non_vidimato' replace ["non _vidimato","vidimato]"
 
 }

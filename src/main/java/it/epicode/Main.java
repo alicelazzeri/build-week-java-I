@@ -33,7 +33,7 @@ public class Main {
         DistributoreDAO disDao = new DistributoreDAO(em);
         UtentiDAO uiDao = new UtentiDAO(em);
 
-        emettiBiglietto();
+        // emettiBiglietto();
 
         Tratta tratta = new Tratta("Stazione Centrale", "Corso Italia", 20);
         MezziDAO daoMezzi = new MezziDAO(em);
@@ -49,6 +49,21 @@ public class Main {
                 LocalDate.now(),
                 LocalDate.of(2025,05,15));
         daoMezzi.saveMezzo(tram3);
+
+        Biglietto bigl = new Biglietto(1234);
+        Biglietto bigl2 = new Biglietto(4321);
+        Biglietto bigl3 = new Biglietto(5678);
+        Biglietto bigl4 = new Biglietto(7890);
+        Biglietto bigl5 = new Biglietto(3457);
+        Biglietto bigl6 = new Biglietto(3345);
+        // daoMezzi.vidimaBiglietto(bigl);
+       //  daoMezzi.vidimaBiglietto(bigl3);
+        // daoMezzi.vidimaBiglietto(bigl3);
+
+        // jpa.save(bigl6);
+        daoMezzi.vidimaBiglietto(bigl6);
+
+
 
     }
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
