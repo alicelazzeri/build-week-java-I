@@ -29,7 +29,7 @@ public abstract class TitoloDiViaggio {
     @JoinColumn (name ="id_distributore")
     private Distributore distributore;
 
-    private LocalDate dataEmissione;
+    protected LocalDate dataEmissione;
     public TitoloDiViaggio(Distributore distributore) {
         this.distributore = distributore;
         this.dataEmissione = LocalDate.now();
@@ -48,5 +48,21 @@ public abstract class TitoloDiViaggio {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Distributore getDistributore() {
+        return distributore;
+    }
+
+    public void setDistributore(Distributore distributore) {
+        this.distributore = distributore;
+    }
+
+    public LocalDate getDataEmissione() {
+        return dataEmissione;
+    }
+
+    public LocalDate setDataEmissione(LocalDate dataEmissione) {
+        return this.dataEmissione = dataEmissione;
     }
 }
