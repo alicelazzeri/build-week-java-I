@@ -23,7 +23,7 @@ public abstract class TitoloDiViaggio {
     @GeneratedValue
     private long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn (name ="id_distributore")
     private Distributore distributore;
 

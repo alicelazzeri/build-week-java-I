@@ -17,14 +17,10 @@ public abstract class Distributore {
 
     @OneToMany(mappedBy = "distributore")
     private List<TitoloDiViaggio> titoloViaggio = new ArrayList<>();
-    @OneToMany(mappedBy = "distributore")
-    private List<Biglietto> biglietto = new ArrayList<>();
+
 
     public Distributore(TitoloDiViaggio titoloViaggi) {
         this.titoloViaggio.add(titoloViaggi);
-    }
-    public Distributore(Biglietto biglietto) {
-        this.biglietto.add(biglietto);
     }
 
     public Distributore(){}

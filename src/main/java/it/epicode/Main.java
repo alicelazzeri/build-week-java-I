@@ -28,11 +28,13 @@ public class Main {
 
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
-        TitoloViaggioDAO jpa = new TitoloViaggioDAO(em);
+        Scanner scanner = new Scanner(System.in);
+        TitoloViaggioDAO titoloDAO = new TitoloViaggioDAO(em);
         DistributoreDAO disDao = new DistributoreDAO(em);
-        UtentiDAO uiDao = new UtentiDAO(em);
+        UtentiDAO utDao = new UtentiDAO(em);
         RivenditoreAutorizzato r = new RivenditoreAutorizzato();
         DistributoreAutomatico d = new DistributoreAutomatico();
+
 //    disDao.save(d);
 //    disDao.save(r);
         Tratta tratta = new Tratta("Stazione Centrale", "Corso Italia", 20);
@@ -50,22 +52,27 @@ public class Main {
                 LocalDate.of(2025,05,15));
         //daoMezzi.saveMezzo(tram3);
 
-        LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
-        LocalDate dataFinale = LocalDate.now();
-        System.out.println("test");
-        Biglietto bil = new Biglietto(2345,d);
-        System.out.println("test2");
-        jpa.save(bil);
-        System.out.println("test3");
+//        LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
+//        LocalDate dataFinale = LocalDate.now();
+//        System.out.println("test");
+//        DistributoreAutomatico di = new DistributoreAutomatico();
+//
+//        Biglietto bil = new Biglietto(2345,di);
+//
+//        disDao.save(di);
+//        System.out.println("test2");
+//        jpa.save(bil);
+//        System.out.println("test3");
         //getBiglietti(jpa, dataIniziale, dataFinale);
 
-    //emettiBiglietto(r,d);
+        emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao);
 
     }
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
 
-    public static void emettiBiglietto(Distributore r,Distributore d) {
-        try (Scanner scanner = new Scanner(System.in)) {
+    public static void emettiBiglietto(Distributore r,Distributore d, EntityManager em,Scanner scanner,
+                                       TitoloViaggioDAO titoloDAO,DistributoreDAO disDAO,UtentiDAO utDao) {
+        try {
             String input;
             do {
                 System.out.println("Scegli dove acquistare il biglietto o l'abbonamento:");
@@ -85,10 +92,10 @@ public class Main {
                         int subChoice1 = Integer.parseInt(scanner.nextLine());
                         switch (subChoice1) {
                             case 1:
-                                ricevitoria(r);
+                                ricevitoria(r,em,titoloDAO,disDAO);
                                 break;
                             case 2:
-                                creaAbbonamento();
+                                ricevitoriaAbbonamento(em,scanner,titoloDAO,utDao,disDAO);
                                 break;
                             default:
                                 System.out.println("Scelta non valida");
@@ -104,10 +111,10 @@ public class Main {
                         int subChoice2 = Integer.parseInt(scanner.nextLine());
                         switch (subChoice2) {
                             case 1:
-                                distributore(d);
+                                distributore(d,em,titoloDAO,disDAO);
                                 break;
                             case 2:
-                                distributoreAbbonamento();
+                                distributoreAbbonamento(em,scanner,titoloDAO,utDao,disDAO);
                                 break;
                             default:
                                 System.out.println("Scelta non valida");
@@ -125,60 +132,50 @@ public class Main {
                 System.out.println("---------------------------\n");
                 input = scanner.nextLine().toLowerCase();
             } while (!input.equals("no"));
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
     }
 
-
-    public static void ricevitoria(Distributore r){
-        Biglietto b = emettiBigliettoStandard(r);
-        DistributoreDAO dao = new DistributoreDAO(emf.createEntityManager());
+    public static void ricevitoria(Distributore r,EntityManager em,TitoloViaggioDAO titoloDAO,DistributoreDAO disDao){
+        Biglietto b = emettiBigliettoStandard(r,titoloDAO,em);
         r = new RivenditoreAutorizzato(b);
-        dao.save(r);
+        disDao.save(r);
     }
-    public static void ricevitoriaAbbonamento(){
-        Abbonamento a = creaAbbonamento();
-        DistributoreDAO dao = new DistributoreDAO(emf.createEntityManager());
+    public static RivenditoreAutorizzato ricevitoriaAbbonamento(EntityManager em, Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDao){
+        Abbonamento a = creaAbbonamento(em,scanner,titoloDAO,utDAO);
         RivenditoreAutorizzato v = new RivenditoreAutorizzato(a);
-        dao.save(v);
+        disDao.save(v);
+        return v;
     }
 
-    public static void distributore(Distributore r){
-        Biglietto b = emettiBigliettoStandard(r);
-        DistributoreDAO dao = new DistributoreDAO(emf.createEntityManager());
+    public static void distributore(Distributore r,EntityManager em,TitoloViaggioDAO titoloDAO,DistributoreDAO disDAO){
+        Biglietto b = emettiBigliettoStandard(r,titoloDAO,em);
         r = new DistributoreAutomatico(b);
-        dao.save(r);
+        disDAO.save(r);
     }
-    public static void distributoreAbbonamento(){
-        Abbonamento a = creaAbbonamento();
-        DistributoreDAO dao = new DistributoreDAO(emf.createEntityManager());
+    public static void distributoreAbbonamento(EntityManager em,Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDAO){
+        Abbonamento a = creaAbbonamento(em,scanner,titoloDAO,utDAO);
         DistributoreAutomatico v = new DistributoreAutomatico(a);
-        dao.save(v);
+        disDAO.save(v);
     }
 
-    public static Biglietto emettiBigliettoStandard(Distributore r){
+    public static Biglietto emettiBigliettoStandard(Distributore r,TitoloViaggioDAO titoloDAO,EntityManager em){
         Faker f = new Faker();
         Random rand = new Random();
         Biglietto b = new Biglietto(rand.nextInt(100)+1,r);
-        TitoloViaggioDAO dao = new TitoloViaggioDAO(emf.createEntityManager());
-        dao.save(b);
+        titoloDAO.save(b);
         System.out.println(" il numero di biglietto emesso è " + b.getNumeroBiglietto());
         return b;
     }
 
-    public static Abbonamento creaAbbonamento(){
-    Scanner scanner = new Scanner(System.in);
-
-        UtentiDAO dao = new UtentiDAO(emf.createEntityManager());
-        TitoloViaggioDAO tDao = new TitoloViaggioDAO(emf.createEntityManager());
+    public static Abbonamento creaAbbonamento(EntityManager em,Scanner scanner, TitoloViaggioDAO titoloDAO,UtentiDAO utDAO){
         System.out.println("Inserisci il nome dell'utente: ");
         String nome = scanner.nextLine();
         Utente u = new Utente(nome);
-        dao.save(u);
-
+        utDAO.save(u);
         Tessera t = new Tessera(u,LocalDate.now());
-        dao.saveTessera(t);
-
-        //scanner.nextLine();
+        utDAO.saveTessera(t);
         System.out.println("Scegli il tipo di abbonamento: ");
         System.out.println("1. Settimanale");
         System.out.println("2. Mensile");
@@ -189,7 +186,7 @@ public class Main {
                 default -> throw new IllegalArgumentException("Opzione non valida.");
             };
         Abbonamento a = new Abbonamento(u,t,sm);
-        tDao.save(a);
+        titoloDAO.save(a);
         return a;
     }
 

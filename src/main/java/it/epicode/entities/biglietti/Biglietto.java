@@ -14,16 +14,17 @@ public class Biglietto extends TitoloDiViaggio {
     private LocalDate dataEmissione;
     private long numeroBiglietto;
 
-//    @ManyToOne
-//    @JoinColumn (name ="id_distributore")
-//    private Distributore distributore;
+
 
     public Biglietto(long numeroBiglietto, Distributore distributore) {
-        super(distributore = distributore);
+        super(distributore);
         this.numeroBiglietto = numeroBiglietto;
         this.dataEmissione = LocalDate.now();
         this.statoBiglietto = StatoBiglietto.NON_VIDIMATO;
     }
+
+
+
     public Biglietto() {
     }
     public LocalDate getDataEmissione() {
