@@ -33,7 +33,8 @@ public class Main {
         UtentiDAO uiDao = new UtentiDAO(em);
         RivenditoreAutorizzato r = new RivenditoreAutorizzato();
         DistributoreAutomatico d = new DistributoreAutomatico();
-
+//    disDao.save(d);
+//    disDao.save(r);
         Tratta tratta = new Tratta("Stazione Centrale", "Corso Italia", 20);
         MezziDAO daoMezzi = new MezziDAO(em);
         //daoMezzi.saveTratta(tratta);
@@ -51,8 +52,12 @@ public class Main {
 
         LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
         LocalDate dataFinale = LocalDate.now();
-
-        getBiglietti(jpa, dataIniziale, dataFinale);
+        System.out.println("test");
+        Biglietto bil = new Biglietto(2345,d);
+        System.out.println("test2");
+        jpa.save(bil);
+        System.out.println("test3");
+        //getBiglietti(jpa, dataIniziale, dataFinale);
 
     //emettiBiglietto(r,d);
 

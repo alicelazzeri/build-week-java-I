@@ -7,24 +7,25 @@ import java.time.LocalDate;
 @Entity
 @Table (name = "biglietti")
 @DiscriminatorValue("B")
-
 public class Biglietto extends TitoloDiViaggio {
 
     @Enumerated(EnumType.STRING)
-    private StatoBiglietto statoBiglietto = StatoBiglietto.NON_VIDIMATO;
-    private LocalDate dataEmissione = LocalDate.now();
+    private StatoBiglietto statoBiglietto;
+    private LocalDate dataEmissione;
     private long numeroBiglietto;
 
+//    @ManyToOne
+//    @JoinColumn (name ="id_distributore")
+//    private Distributore distributore;
 
-    public Biglietto(long numeroBiglietto, Distributore emissione) {
+    public Biglietto(long numeroBiglietto, Distributore distributore) {
+        super(distributore = distributore);
         this.numeroBiglietto = numeroBiglietto;
-        LocalDate dataEmissione = this.dataEmissione;
-        StatoBiglietto statoBiglietto1 = this.statoBiglietto;
+        this.dataEmissione = LocalDate.now();
+        this.statoBiglietto = StatoBiglietto.NON_VIDIMATO;
     }
-
     public Biglietto() {
     }
-
     public LocalDate getDataEmissione() {
         return dataEmissione;
     }
