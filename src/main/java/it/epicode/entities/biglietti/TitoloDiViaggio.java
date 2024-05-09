@@ -4,6 +4,8 @@ import it.epicode.entities.utenti.Tessera;
 import it.epicode.entities.utenti.Utente;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "titoli_di_viaggio")
 @Inheritance (strategy = InheritanceType.JOINED)
@@ -27,8 +29,10 @@ public abstract class TitoloDiViaggio {
     @JoinColumn (name ="id_distributore")
     private Distributore distributore;
 
+    private LocalDate dataEmissione;
     public TitoloDiViaggio(Distributore distributore) {
         this.distributore = distributore;
+        this.dataEmissione = LocalDate.now();
     }
     public TitoloDiViaggio() {
 

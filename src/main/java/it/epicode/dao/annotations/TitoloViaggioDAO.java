@@ -66,11 +66,12 @@ public class TitoloViaggioDAO {
         }
     }
 
-    public List<Biglietto> ricercaTitoliViaggioTotaliPerDistributore(LocalDate dataIniziale, LocalDate dataFinale) {
-        Query query = em.createQuery("SELECT b FROM Biglietto b WHERE b.dataEmissione BETWEEN :dataIniziale AND :dataFinale");
-        query.setParameter("dataIniziale", dataIniziale);
-        query.setParameter("dataFinale", dataFinale);
-        return query.getResultList();
+    public Long ricercaTitoliViaggioTotaliPerDistributore(LocalDate dataIniziale, LocalDate dataFinale) {
+        Long query = em.createQuery("SELECT COUNT(b) FROM TitoloDiViaggio b WHERE b.dataEmissione BETWEEN :dataIniziale AND :dataFinale",Long.class)
+        .setParameter("dataIniziale", dataIniziale)
+        .setParameter("dataFinale", dataFinale)
+        .getSingleResult();
+        return query;
     }
 
 

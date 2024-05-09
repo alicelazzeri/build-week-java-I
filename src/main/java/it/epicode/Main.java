@@ -52,9 +52,9 @@ public class Main {
 
 //        LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
 //        LocalDate dataFinale = LocalDate.now();
-        //getBiglietti(jpa, dataIniziale, dataFinale);
+//            getBiglietti(titoloDAO, dataIniziale, dataFinale);
 
-        //emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao);
+        emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao);
 
     }
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
@@ -180,9 +180,7 @@ public class Main {
     }
 
     public static void getBiglietti(TitoloViaggioDAO jpa,LocalDate dataIniziale,LocalDate dataFinale){
-        List<Biglietto> risultati = jpa.ricercaTitoliViaggioTotaliPerDistributore(dataIniziale, dataFinale);
-        for (Biglietto titoloViaggio : risultati) {
-            System.out.println("ID: " + titoloViaggio.getId() + ", Data Emissione: " + titoloViaggio.getDataEmissione() );
-        }
+        Long risultati = jpa.ricercaTitoliViaggioTotaliPerDistributore(dataIniziale, dataFinale);
+        System.out.println(risultati);
     }
 }
