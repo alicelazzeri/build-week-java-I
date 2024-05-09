@@ -26,8 +26,6 @@ import java.util.Scanner;
 
 public class Main {
 
-
-
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
         TitoloViaggioDAO jpa = new TitoloViaggioDAO(em);
@@ -35,9 +33,6 @@ public class Main {
         UtentiDAO uiDao = new UtentiDAO(em);
         RivenditoreAutorizzato r = new RivenditoreAutorizzato();
         DistributoreAutomatico d = new DistributoreAutomatico();
-
-
-        //emettiBiglietto(r,d);
 
         Tratta tratta = new Tratta("Stazione Centrale", "Corso Italia", 20);
         MezziDAO daoMezzi = new MezziDAO(em);
@@ -54,37 +49,12 @@ public class Main {
                 LocalDate.of(2025,05,15));
         //daoMezzi.saveMezzo(tram3);
 
-//        Biglietto bigl = new Biglietto(1234);
-//        Biglietto bigl2 = new Biglietto(4321);
-//        Biglietto bigl3 = new Biglietto(5678);
-//        Biglietto bigl4 = new Biglietto(7890);
-//        Biglietto bigl5 = new Biglietto(3457);
-//        Biglietto bigl6 = new Biglietto(3345);
-        // daoMezzi.vidimaBiglietto(bigl);
-       //  daoMezzi.vidimaBiglietto(bigl3);
-        // daoMezzi.vidimaBiglietto(bigl3);
-
-        // jpa.save(bigl6);
-        //daoMezzi.vidimaBiglietto(bigl6);
-        //jpa.cercaBiglietto(3345);
-
         LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
         LocalDate dataFinale = LocalDate.now();
 
-//        List<Object[]> risultati = jpa.ricercaTitoliViaggioTotaliPerDistributore(dataIniziale, dataFinale);
-//        for (Object[] risultato : risultati) {
-//            Distributore distributore = (Distributore) risultato[0]; // Assicurati che Distributore sia il tipo corretto
-//            Long conteggioAbbonamenti = (Long) risultato[1];
-//            Long conteggioBiglietti = (Long) risultato[2];
-//            System.out.println("Distributore: " + distributore.getNome() + ", Numero di Abbonamenti: " + conteggioAbbonamenti + ", Numero di Biglietti: " + conteggioBiglietti);
-//        }
+        getBiglietti(jpa, dataIniziale, dataFinale);
 
-        //Biglietto d = new Biglietto(234);
-        Biglietto rr = new Biglietto(44,r);
-
-        daoMezzi.vidimaBiglietto(rr);
-
-
+    //emettiBiglietto(r,d);
 
     }
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
@@ -216,5 +186,12 @@ public class Main {
         Abbonamento a = new Abbonamento(u,t,sm);
         tDao.save(a);
         return a;
+    }
+
+    public static void getBiglietti(TitoloViaggioDAO jpa,LocalDate dataIniziale,LocalDate dataFinale){
+        List<Biglietto> risultati = jpa.ricercaTitoliViaggioTotaliPerDistributore(dataIniziale, dataFinale);
+        for (Biglietto titoloViaggio : risultati) {
+            System.out.println("ID: " + titoloViaggio.getId() + ", Data Emissione: " + titoloViaggio.getDataEmissione() );
+        }
     }
 }
