@@ -33,51 +33,63 @@ public class Main {
         TitoloViaggioDAO jpa = new TitoloViaggioDAO(em);
         DistributoreDAO disDao = new DistributoreDAO(em);
         UtentiDAO uiDao = new UtentiDAO(em);
+        RivenditoreAutorizzato r = new RivenditoreAutorizzato();
+        DistributoreAutomatico d = new DistributoreAutomatico();
 
-        // emettiBiglietto();
+
+        //emettiBiglietto(r,d);
 
         Tratta tratta = new Tratta("Stazione Centrale", "Corso Italia", 20);
         MezziDAO daoMezzi = new MezziDAO(em);
-        daoMezzi.saveTratta(tratta);
+        //daoMezzi.saveTratta(tratta);
 
         Autobus autobus2 = new Autobus(100, StatoMezzo.IN_SERVIZIO,
                 LocalDate.of(2023, 3, 12),
                 LocalDate.of(2024, 7, 15),
                 tratta);
-        daoMezzi.saveMezzo(autobus2);
+        //daoMezzi.saveMezzo(autobus2);
 
         Tram tram3 = new Tram(120,StatoMezzo.IN_MANUTENZIONE,
                 LocalDate.now(),
                 LocalDate.of(2025,05,15));
-        daoMezzi.saveMezzo(tram3);
+        //daoMezzi.saveMezzo(tram3);
 
-        Biglietto bigl = new Biglietto(1234);
-        Biglietto bigl2 = new Biglietto(4321);
-        Biglietto bigl3 = new Biglietto(5678);
-        Biglietto bigl4 = new Biglietto(7890);
-        Biglietto bigl5 = new Biglietto(3457);
-        Biglietto bigl6 = new Biglietto(3345);
+//        Biglietto bigl = new Biglietto(1234);
+//        Biglietto bigl2 = new Biglietto(4321);
+//        Biglietto bigl3 = new Biglietto(5678);
+//        Biglietto bigl4 = new Biglietto(7890);
+//        Biglietto bigl5 = new Biglietto(3457);
+//        Biglietto bigl6 = new Biglietto(3345);
         // daoMezzi.vidimaBiglietto(bigl);
        //  daoMezzi.vidimaBiglietto(bigl3);
         // daoMezzi.vidimaBiglietto(bigl3);
 
         // jpa.save(bigl6);
-        // daoMezzi.vidimaBiglietto(bigl6);
-
+        //daoMezzi.vidimaBiglietto(bigl6);
+        //jpa.cercaBiglietto(3345);
 
         LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
         LocalDate dataFinale = LocalDate.now();
 
-        List<TitoloDiViaggio> titoliViaggio = jpa.ricercaTitoliViaggioTotaliPerDistributore(dataIniziale, dataFinale);
-        for (TitoloDiViaggio titoloViaggio : titoliViaggio) {
-            System.out.println(titoliViaggio);
-        }
+//        List<Object[]> risultati = jpa.ricercaTitoliViaggioTotaliPerDistributore(dataIniziale, dataFinale);
+//        for (Object[] risultato : risultati) {
+//            Distributore distributore = (Distributore) risultato[0]; // Assicurati che Distributore sia il tipo corretto
+//            Long conteggioAbbonamenti = (Long) risultato[1];
+//            Long conteggioBiglietti = (Long) risultato[2];
+//            System.out.println("Distributore: " + distributore.getNome() + ", Numero di Abbonamenti: " + conteggioAbbonamenti + ", Numero di Biglietti: " + conteggioBiglietti);
+//        }
+
+        //Biglietto d = new Biglietto(234);
+        Biglietto rr = new Biglietto(44,r);
+
+        daoMezzi.vidimaBiglietto(rr);
+
 
 
     }
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
 
-    public static void emettiBiglietto() {
+    public static void emettiBiglietto(Distributore r,Distributore d) {
         try (Scanner scanner = new Scanner(System.in)) {
             String input;
             do {
@@ -98,7 +110,7 @@ public class Main {
                         int subChoice1 = Integer.parseInt(scanner.nextLine());
                         switch (subChoice1) {
                             case 1:
-                                ricevitoria();
+                                ricevitoria(r);
                                 break;
                             case 2:
                                 creaAbbonamento();
@@ -117,7 +129,7 @@ public class Main {
                         int subChoice2 = Integer.parseInt(scanner.nextLine());
                         switch (subChoice2) {
                             case 1:
-                                distributore();
+                                distributore(d);
                                 break;
                             case 2:
                                 distributoreAbbonamento();
@@ -142,11 +154,11 @@ public class Main {
     }
 
 
-    public static void ricevitoria(){
-        Biglietto b = emettiBigliettoStandard();
+    public static void ricevitoria(Distributore r){
+        Biglietto b = emettiBigliettoStandard(r);
         DistributoreDAO dao = new DistributoreDAO(emf.createEntityManager());
-        RivenditoreAutorizzato v = new RivenditoreAutorizzato(b);
-        dao.save(v);
+        r = new RivenditoreAutorizzato(b);
+        dao.save(r);
     }
     public static void ricevitoriaAbbonamento(){
         Abbonamento a = creaAbbonamento();
@@ -155,11 +167,11 @@ public class Main {
         dao.save(v);
     }
 
-    public static void distributore(){
-        Biglietto b = emettiBigliettoStandard();
+    public static void distributore(Distributore r){
+        Biglietto b = emettiBigliettoStandard(r);
         DistributoreDAO dao = new DistributoreDAO(emf.createEntityManager());
-        DistributoreAutomatico v = new DistributoreAutomatico(b);
-        dao.save(v);
+        r = new DistributoreAutomatico(b);
+        dao.save(r);
     }
     public static void distributoreAbbonamento(){
         Abbonamento a = creaAbbonamento();
@@ -168,10 +180,10 @@ public class Main {
         dao.save(v);
     }
 
-    public static Biglietto emettiBigliettoStandard(){
+    public static Biglietto emettiBigliettoStandard(Distributore r){
         Faker f = new Faker();
         Random rand = new Random();
-        Biglietto b = new Biglietto(rand.nextInt(100)+1);
+        Biglietto b = new Biglietto(rand.nextInt(100)+1,r);
         TitoloViaggioDAO dao = new TitoloViaggioDAO(emf.createEntityManager());
         dao.save(b);
         System.out.println(" il numero di biglietto emesso è " + b.getNumeroBiglietto());

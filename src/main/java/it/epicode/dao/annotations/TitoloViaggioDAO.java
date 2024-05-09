@@ -8,6 +8,7 @@ import it.epicode.entities.mezzi.Mezzo;
 import it.epicode.entities.utenti.Tessera;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,13 +38,14 @@ public class TitoloViaggioDAO {
         }
 
     public Biglietto cercaBiglietto(long numeroBiglietto){
-        Biglietto biglietto = em.find(Biglietto.class, numeroBiglietto);
-        if (biglietto!= null) {
-            logger.debug("biglietto trovato {}", biglietto);
-        } else {
-            logger.debug("biglietto non trovato");
+        try{
+            return em.createQuery("SELECT b FROM Biglietto b where b.numeroBiglietto = :numeroBiglietto", Biglietto.class)
+                    .setParameter("numeroBiglietto",numeroBiglietto)
+                    .getSingleResult();
+        }catch(NoResultException e){
+            logger.error("Biglietto non trovato", e);
+            return null;
         }
-        return biglietto;
     }
 
     public void deleteBiglietto(long numeroBiglietto) {
@@ -64,13 +66,19 @@ public class TitoloViaggioDAO {
         }
     }
 
-    public List<TitoloDiViaggio> ricercaTitoliViaggioTotaliPerDistributore(LocalDate dataIniziale, LocalDate dataFinale) {
-            Query query = em.createQuery("SELECT COUNT(tv) FROM TitoloDiViaggio tv WHERE tv.dataEmissione BETWEEN :dataIniziale AND :dataFinale GROUP BY tv.distributore", TitoloDiViaggio.class);
-            query.setParameter("dataIniziale", dataIniziale);
-            query.setParameter("dataFinale", dataFinale);
-            var result = query.getResultList();
-            return result;
+    public List<Object[]> ricercaTitoliViaggioTotaliPerDistributore(LocalDate dataIniziale, LocalDate dataFinale) {
+        Query query = em.createQuery("SELECT da, COUNT(CASE WHEN b.tipo = 'Abbonamento' THEN 1 END), COUNT(CASE WHEN b.tipo = 'Biglietto' THEN 1 END) " +
+                "FROM Biglietto b JOIN b.DistributoreAutomatico da " +
+                "WHERE b.dataEmissione BETWEEN :dataIniziale AND :dataFinale " +
+                "GROUP BY da");
+        query.setParameter("dataIniziale", dataIniziale);
+        query.setParameter("dataFinale", dataFinale);
+        return query.getResultList();
     }
+
+
+
+
 }
 
 

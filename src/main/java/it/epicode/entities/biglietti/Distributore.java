@@ -31,11 +31,16 @@ public abstract class Distributore {
         this.id = id;
     }
 
+
     public List<TitoloDiViaggio> getTitoloViaggio() {
         return titoloViaggio;
     }
 
     public void setTitoloViaggio(List<TitoloDiViaggio> titoloViaggio) {
         this.titoloViaggio = titoloViaggio;
+    }
+
+    public String getNome() {
+        return null;
     }
 }

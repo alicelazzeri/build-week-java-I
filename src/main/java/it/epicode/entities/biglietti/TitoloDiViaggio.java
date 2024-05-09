@@ -27,6 +27,9 @@ public abstract class TitoloDiViaggio {
     @JoinColumn (name ="id_distributore")
     private Distributore distributore;
 
+    public TitoloDiViaggio(Distributore distributore) {
+        this.distributore = distributore;
+    }
     public TitoloDiViaggio() {
 
     }

@@ -15,4 +15,6 @@ public class RivenditoreAutorizzato extends Distributore {
         super(titoloViaggi);
     }
 
+    public RivenditoreAutorizzato() {
+    }
 }
