@@ -22,15 +22,16 @@ public class Abbonamento extends TitoloDiViaggio {
     @JoinColumn(name = "id_tessera")
     private Tessera tessera;
 
-    private LocalDate dataEmissione = LocalDate.now();
+    private LocalDate dataEmissione;
     private LocalDate dataScadenza;
 
-    public Abbonamento(Utente utente, Tessera tessera, TipoAbbonamento tipoAbbonamento) {
+    public Abbonamento(Utente utente, Tessera tessera, TipoAbbonamento tipoAbbonamento,Distributore distributore) {
+        super(distributore);
         this.tipoAbbonamento = tipoAbbonamento;
         this.utente = utente;
         this.tessera = tessera;
-        LocalDate dataEmissione = this.dataEmissione;
-        LocalDate dataScadenza = scadenzaAbbonamento(tipoAbbonamento);
+        this.dataEmissione = LocalDate.now();
+        this.dataScadenza = scadenzaAbbonamento(tipoAbbonamento);
     }
 
     public Abbonamento() {

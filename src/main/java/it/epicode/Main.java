@@ -35,8 +35,6 @@ public class Main {
         RivenditoreAutorizzato r = new RivenditoreAutorizzato();
         DistributoreAutomatico d = new DistributoreAutomatico();
 
-//    disDao.save(d);
-//    disDao.save(r);
         Tratta tratta = new Tratta("Stazione Centrale", "Corso Italia", 20);
         MezziDAO daoMezzi = new MezziDAO(em);
         //daoMezzi.saveTratta(tratta);
@@ -54,18 +52,9 @@ public class Main {
 
 //        LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
 //        LocalDate dataFinale = LocalDate.now();
-//        System.out.println("test");
-//        DistributoreAutomatico di = new DistributoreAutomatico();
-//
-//        Biglietto bil = new Biglietto(2345,di);
-//
-//        disDao.save(di);
-//        System.out.println("test2");
-//        jpa.save(bil);
-//        System.out.println("test3");
         //getBiglietti(jpa, dataIniziale, dataFinale);
 
-        emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao);
+        //emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao);
 
     }
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
@@ -95,7 +84,7 @@ public class Main {
                                 ricevitoria(r,em,titoloDAO,disDAO);
                                 break;
                             case 2:
-                                ricevitoriaAbbonamento(em,scanner,titoloDAO,utDao,disDAO);
+                                ricevitoriaAbbonamento(em,scanner,titoloDAO,utDao,disDAO,r);
                                 break;
                             default:
                                 System.out.println("Scelta non valida");
@@ -114,7 +103,7 @@ public class Main {
                                 distributore(d,em,titoloDAO,disDAO);
                                 break;
                             case 2:
-                                distributoreAbbonamento(em,scanner,titoloDAO,utDao,disDAO);
+                                distributoreAbbonamento(em,scanner,titoloDAO,utDao,disDAO,d);
                                 break;
                             default:
                                 System.out.println("Scelta non valida");
@@ -142,8 +131,8 @@ public class Main {
         r = new RivenditoreAutorizzato(b);
         disDao.save(r);
     }
-    public static RivenditoreAutorizzato ricevitoriaAbbonamento(EntityManager em, Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDao){
-        Abbonamento a = creaAbbonamento(em,scanner,titoloDAO,utDAO);
+    public static RivenditoreAutorizzato ricevitoriaAbbonamento(EntityManager em, Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDao,Distributore r){
+        Abbonamento a = creaAbbonamento(em,scanner,titoloDAO,utDAO,r);
         RivenditoreAutorizzato v = new RivenditoreAutorizzato(a);
         disDao.save(v);
         return v;
@@ -154,8 +143,8 @@ public class Main {
         r = new DistributoreAutomatico(b);
         disDAO.save(r);
     }
-    public static void distributoreAbbonamento(EntityManager em,Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDAO){
-        Abbonamento a = creaAbbonamento(em,scanner,titoloDAO,utDAO);
+    public static void distributoreAbbonamento(EntityManager em,Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDAO,Distributore d){
+        Abbonamento a = creaAbbonamento(em,scanner,titoloDAO,utDAO,d);
         DistributoreAutomatico v = new DistributoreAutomatico(a);
         disDAO.save(v);
     }
@@ -169,7 +158,7 @@ public class Main {
         return b;
     }
 
-    public static Abbonamento creaAbbonamento(EntityManager em,Scanner scanner, TitoloViaggioDAO titoloDAO,UtentiDAO utDAO){
+    public static Abbonamento creaAbbonamento(EntityManager em,Scanner scanner, TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,Distributore d){
         System.out.println("Inserisci il nome dell'utente: ");
         String nome = scanner.nextLine();
         Utente u = new Utente(nome);
@@ -185,7 +174,7 @@ public class Main {
                 case 2 -> TipoAbbonamento.MENSILE;
                 default -> throw new IllegalArgumentException("Opzione non valida.");
             };
-        Abbonamento a = new Abbonamento(u,t,sm);
+        Abbonamento a = new Abbonamento(u,t,sm,d);
         titoloDAO.save(a);
         return a;
     }
