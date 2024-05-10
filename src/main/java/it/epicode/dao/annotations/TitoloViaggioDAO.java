@@ -1,16 +1,11 @@
 package it.epicode.dao.annotations;
 
-import it.epicode.dao.DistributoreDao;
 import it.epicode.entities.biglietti.Abbonamento;
 import it.epicode.entities.biglietti.Biglietto;
-import it.epicode.entities.biglietti.Distributore;
 import it.epicode.entities.biglietti.TitoloDiViaggio;
-import it.epicode.entities.mezzi.Mezzo;
-import it.epicode.entities.utenti.Tessera;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +44,7 @@ public class TitoloViaggioDAO {
         }
     }
 
-    public Abbonamento cercaAbbonamentoPerTessera (long tessera) {
+    public Abbonamento cercaAbbonamentoPerTessera(long tessera) {
         try {
             return em.createQuery("SELECT a FROM Abbonamento a WHERE a.tessera.id = :tessera", Abbonamento.class)
                     .setParameter("tessera", tessera)
@@ -79,8 +74,7 @@ public class TitoloViaggioDAO {
         }
     }
 
-
-    public Long ricercaTitoliViaggioTotaliPerDistributore(LocalDate dataIniziale, LocalDate dataFinale) {
+    public Long ricercaTitoliViaggioTotali(LocalDate dataIniziale, LocalDate dataFinale) {
         Long query = em.createQuery("SELECT COUNT(b) FROM TitoloDiViaggio b WHERE b.dataEmissione BETWEEN :dataIniziale AND :dataFinale",Long.class)
         .setParameter("dataIniziale", dataIniziale)
         .setParameter("dataFinale", dataFinale)
@@ -88,6 +82,15 @@ public class TitoloViaggioDAO {
         return query;
     }
 
+//    List<Object[]> risultatiBigliettiPerPuntoEmissione (LocalDate dataIniziale, LocalDate dataFinale) {
+//        em.createQuery(
+//                        "SELECT b.distributore.id, COUNT(b) FROM Biglietto b " +
+//                                "WHERE b.dataEmissione BETWEEN :dataIniziale AND :dataFinale " +
+//                                "GROUP BY b.distributore.id", Object[].class)
+//                .setParameter("dataIniziale", dataIniziale)
+//                .setParameter("dataFinale", dataFinale)
+//                .getResultList();
+//    }
 
 }
 

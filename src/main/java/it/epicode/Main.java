@@ -15,12 +15,8 @@ import it.epicode.entities.utenti.Utente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -59,6 +55,9 @@ public class Main {
         var tessera = titoloDAO.cercaAbbonamentoPerTessera(1202);
         System.out.println("NUMERO TESSERA TROVATA");
         System.out.println(tessera);
+
+        System.out.println("VALIDITA ABBONAMENTO");
+        validitaAbbonamento(titoloDAO, 1202);
 
     }
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
@@ -184,7 +183,16 @@ public class Main {
     }
 
     public static void getBiglietti(TitoloViaggioDAO jpa,LocalDate dataIniziale,LocalDate dataFinale){
-        Long risultati = jpa.ricercaTitoliViaggioTotaliPerDistributore(dataIniziale, dataFinale);
+        Long risultati = jpa.ricercaTitoliViaggioTotali(dataIniziale, dataFinale);
         System.out.println(risultati);
+    }
+
+    public static void validitaAbbonamento (TitoloViaggioDAO titoloDAO, long tessera) {
+        Abbonamento ricercaAbbonamento = titoloDAO.cercaAbbonamentoPerTessera(tessera);
+        if (ricercaAbbonamento.getDataScadenza().isAfter(LocalDate.now())) {
+            System.out.println("L'abbonamento è valido");
+        } else {
+            System.out.println("L'abbonamento non è valido");
+        }
     }
 }
