@@ -29,6 +29,8 @@ public abstract class Mezzo {
     @JoinColumn(name ="id_tratta")
     private Tratta tratta;
 
+
+
     public Mezzo(int capienzaMax, StatoMezzo statoMezzo, LocalDate inizioPeriodoServizio,
                     LocalDate finePeriodoServizio,Tratta tratta) {
         this.capienzaMax = capienzaMax;

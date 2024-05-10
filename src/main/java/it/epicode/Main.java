@@ -31,6 +31,8 @@ public class Main {
         UtentiDAO utDao = new UtentiDAO(em);
         RivenditoreAutorizzato r = new RivenditoreAutorizzato();
         DistributoreAutomatico d = new DistributoreAutomatico();
+        Biglietto b = new Biglietto();
+        Abbonamento a = new Abbonamento();
 
         Tratta tratta = new Tratta("Stazione Centrale", "Corso Italia", 20);
         MezziDAO daoMezzi = new MezziDAO(em);
@@ -52,7 +54,7 @@ public class Main {
 //        LocalDate dataFinale = LocalDate.now();
 //            getBiglietti(titoloDAO, dataIniziale, dataFinale);
 
-       //  emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao);
+       emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao,daoMezzi,b,a);
 
 //        var tessera = titoloDAO.cercaAbbonamentoPerTessera(1202);
 //        System.out.println("NUMERO TESSERA TROVATA");
@@ -61,17 +63,30 @@ public class Main {
 //        System.out.println("VALIDITA ABBONAMENTO");
 //        validitaAbbonamento(titoloDAO, 1202);
 
-        var mezziManutenzione = daoMezzi.risultatiMezziPeriodoManutenzione();
-        System.out.println(mezziManutenzione);
+//        var mezziManutenzione = daoMezzi.risultatiMezziPeriodoManutenzione();
+//        System.out.println("Mezzi in manutenzione");
+//        if (mezziManutenzione != null) {
+//            mezziManutenzione.forEach(mezzoManutenzione -> System.out.println(mezzoManutenzione));
+//        } else {
+//            System.out.println("Nessun mezzo in manutenzione trovato");
+//        }
+//
+//        var mezziServizio =  daoMezzi.risultatiMezziPeriodoServizio();
+//        System.out.println("Mezzi in servizio");
+//        if (mezziServizio != null) {
+//            mezziServizio.forEach(mezzoServizio -> System.out.println(mezzoServizio));
+//        } else {
+//            System.out.println("Nessun mezzo in manutenzione trovato");
+//        }
 
-        var mezziServizio =  daoMezzi.risultatiMezziPeriodoServizio();
-        System.out.println(mezziServizio);
     }
+
 
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
 
     public static void emettiBiglietto(Distributore r,Distributore d, EntityManager em,Scanner scanner,
-                                       TitoloViaggioDAO titoloDAO,DistributoreDAO disDAO,UtentiDAO utDao) {
+                                       TitoloViaggioDAO titoloDAO,DistributoreDAO disDAO,UtentiDAO utDao,
+                                       MezziDAO mezziDao ,Biglietto b,Abbonamento a) {
         try {
             String input;
             do {
@@ -92,10 +107,10 @@ public class Main {
                         int subChoice1 = Integer.parseInt(scanner.nextLine());
                         switch (subChoice1) {
                             case 1:
-                                ricevitoria(r,em,titoloDAO,disDAO);
+                                ricevitoria(r,em,titoloDAO,disDAO,b);
                                 break;
                             case 2:
-                                ricevitoriaAbbonamento(em,scanner,titoloDAO,utDao,disDAO,r);
+                                ricevitoriaAbbonamento(em,scanner,titoloDAO,utDao,disDAO,r,a);
                                 break;
                             default:
                                 System.out.println("Scelta non valida");
@@ -111,10 +126,10 @@ public class Main {
                         int subChoice2 = Integer.parseInt(scanner.nextLine());
                         switch (subChoice2) {
                             case 1:
-                                distributore(d,em,titoloDAO,disDAO);
+                                distributore(d,em,titoloDAO,disDAO,b);
                                 break;
                             case 2:
-                                distributoreAbbonamento(em,scanner,titoloDAO,utDao,disDAO,d);
+                                distributoreAbbonamento(em,scanner,titoloDAO,utDao,disDAO,d,a);
                                 break;
                             default:
                                 System.out.println("Scelta non valida");
@@ -132,44 +147,110 @@ public class Main {
                 System.out.println("---------------------------\n");
                 input = scanner.nextLine().toLowerCase();
             } while (!input.equals("no"));
+
+// Ciclo per la convalida dei biglietti o abbonamenti su diversi mezzi di trasporto
+            do {
+                System.out.println("Prendi mezzo");
+                System.out.println("1 - Tram");
+                System.out.println("2 - Autobus");
+                System.out.println("---------------------------");
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        System.out.println("1 - Vidima biglietto");
+                        System.out.println("2 - Vidima abbonamento");
+                        System.out.println("---------------------------");
+                        int subChoice1 = Integer.parseInt(scanner.nextLine());
+                        switch (subChoice1) {
+                            case 1:
+                                vidimaBigliettoTram(mezziDao,b);
+                                break;
+                            case 2:
+                                vidimaAbbonamentoTram(mezziDao,b);
+                                break;
+                            default:
+                                System.out.println("Scelta non valida");
+                                break;
+                        }
+                        break;
+                    case 2:
+                        System.out.println("1 - Vidima biglietto");
+                        System.out.println("2 - Vidima abbonamento");
+                        System.out.println("---------------------------");
+                        int subChoice2 = Integer.parseInt(scanner.nextLine());
+                        switch (subChoice2) {
+                            case 1:
+                                vidimaBigliettoAuto(mezziDao,b);
+                                break;
+                            case 2:
+                                vidimaAbbonamentoAuto(mezziDao,b);
+                                break;
+                            default:
+                                System.out.println("Scelta non valida");
+                                break;
+                        }
+                        break;
+                    default:
+                        System.out.println("Scelta non valida");
+                        break;
+                }
+                // Aggiungi qui la condizione di uscita dal ciclo, ad esempio:
+                System.out.println("Vuoi continuare la convalida dei biglietti o abbonamenti? (sì/no)");
+                System.out.println("---------------------------\n");
+                input = scanner.nextLine().toLowerCase();
+            } while (!input.equals("no"));
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
     }
 
-    public static void ricevitoria(Distributore r, EntityManager em, TitoloViaggioDAO titoloDAO, DistributoreDAO disDao){
-        Biglietto b = emettiBigliettoStandard(r,titoloDAO,em);
+    public static void ricevitoria(Distributore r, EntityManager em, TitoloViaggioDAO titoloDAO,
+                                   DistributoreDAO disDao,Biglietto b){
+        b = emettiBigliettoStandard(r,titoloDAO,em,b);
         r = new RivenditoreAutorizzato(b);
         disDao.save(r);
     }
-    public static RivenditoreAutorizzato ricevitoriaAbbonamento(EntityManager em, Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDao,Distributore r){
-        Abbonamento a = creaAbbonamento(em,scanner,titoloDAO,utDAO,r);
+    public static RivenditoreAutorizzato ricevitoriaAbbonamento(EntityManager em, Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDao,Distributore r,Abbonamento a){
+        a = creaAbbonamento(em,scanner,titoloDAO,utDAO,r,a);
         RivenditoreAutorizzato v = new RivenditoreAutorizzato(a);
         disDao.save(v);
         return v;
     }
 
-    public static void distributore(Distributore r,EntityManager em,TitoloViaggioDAO titoloDAO,DistributoreDAO disDAO){
-        Biglietto b = emettiBigliettoStandard(r,titoloDAO,em);
+    public static void distributore(Distributore r,EntityManager em,TitoloViaggioDAO titoloDAO,DistributoreDAO disDAO,Biglietto b){
+        b = emettiBigliettoStandard(r,titoloDAO,em,b);
         r = new DistributoreAutomatico(b);
         disDAO.save(r);
     }
-    public static void distributoreAbbonamento(EntityManager em,Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDAO,Distributore d){
-        Abbonamento a = creaAbbonamento(em,scanner,titoloDAO,utDAO,d);
+    public static void distributoreAbbonamento(EntityManager em,Scanner scanner,TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,DistributoreDAO disDAO,Distributore d,Abbonamento a){
+        a = creaAbbonamento(em,scanner,titoloDAO,utDAO,d,a);
         DistributoreAutomatico v = new DistributoreAutomatico(a);
         disDAO.save(v);
     }
 
-    public static Biglietto emettiBigliettoStandard(Distributore r,TitoloViaggioDAO titoloDAO,EntityManager em){
+    public static Biglietto emettiBigliettoStandard(Distributore r,TitoloViaggioDAO titoloDAO,EntityManager em,Biglietto b){
         Faker f = new Faker();
         Random rand = new Random();
-        Biglietto b = new Biglietto(rand.nextInt(100)+1,r);
+        b = new Biglietto(rand.nextInt(100)+1,r);
         titoloDAO.save(b);
         System.out.println(" il numero di biglietto emesso è " + b.getNumeroBiglietto());
         return b;
     }
 
-    public static Abbonamento creaAbbonamento(EntityManager em,Scanner scanner, TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,Distributore d){
+
+    public static void vidimaBigliettoTram(MezziDAO mezziDao,Biglietto b){
+        mezziDao.vidimaBiglietto(b);
+    }
+    public static void vidimaBigliettoAuto(MezziDAO mezziDao,Biglietto b){}
+
+    public static void vidimaAbbonamentoTram(MezziDAO mezziDao,Biglietto b){}
+    public static void vidimaAbbonamentoAuto(MezziDAO mezziDao,Biglietto b){
+
+    }
+
+
+
+    public static Abbonamento creaAbbonamento(EntityManager em,Scanner scanner, TitoloViaggioDAO titoloDAO,UtentiDAO utDAO,Distributore d,Abbonamento a){
         System.out.println("Inserisci il nome dell'utente: ");
         String nome = scanner.nextLine();
         Utente u = new Utente(nome);
@@ -185,7 +266,7 @@ public class Main {
                 case 2 -> TipoAbbonamento.MENSILE;
                 default -> throw new IllegalArgumentException("Opzione non valida.");
             };
-        Abbonamento a = new Abbonamento(u,t,sm,d);
+        a = new Abbonamento(u,t,sm,d);
         titoloDAO.save(a);
         return a;
     }
@@ -203,4 +284,6 @@ public class Main {
             System.out.println("L'abbonamento è valido");
         }
     }
+
+
 }
