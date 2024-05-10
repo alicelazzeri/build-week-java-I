@@ -3,6 +3,8 @@ package it.epicode.entities.utenti;
 import it.epicode.entities.biglietti.Abbonamento;
 import jakarta.persistence.*;
 
+import java.util.StringJoiner;
+
 @Entity
 @Table (name ="utenti")
 public class Utente {
@@ -16,6 +18,9 @@ public class Utente {
 
     @OneToOne (mappedBy = "utente")
     private Abbonamento abbonamento;
+
+    @Transient
+    private boolean toStringCalled = false;
 
     public Utente(String nominativo) {
         this.nominativo = nominativo;
@@ -54,4 +59,15 @@ public class Utente {
     public void setAbbonamento(Abbonamento abbonamento) {
         this.abbonamento = abbonamento;
     }
+
+    @Override
+    public String toString() {
+        return "Utente{}" +
+                "id=" + id +
+                ", nominativo='" + nominativo + "" +
+                ", tessera=" + tessera +
+                ", abbonamento=" + abbonamento +
+                '}';
+    }
+
 }

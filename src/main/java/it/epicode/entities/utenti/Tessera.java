@@ -4,6 +4,7 @@ import it.epicode.entities.biglietti.Abbonamento;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.StringJoiner;
 
 @Entity
 @Table (name = "tessere")
@@ -21,6 +22,9 @@ public class Tessera {
 
     @OneToOne(mappedBy = "tessera")
     private Abbonamento abbonamento;
+
+    @Transient
+    private boolean toStringCalled = false;
 
     public Tessera(Utente ut,LocalDate inizioValidità) {
         this.utente = ut;
@@ -62,4 +66,25 @@ public class Tessera {
     public void setFineValidità(LocalDate fineValidità) {
         this.fineValidità = fineValidità;
     }
+
+    public Abbonamento getAbbonamento() {
+        return abbonamento;
+    }
+
+    public void setAbbonamento(Abbonamento abbonamento) {
+        this.abbonamento = abbonamento;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Tessera{" +
+                "id=" + id +
+                ", inizioValidità=" + inizioValidità +
+                ", fineValidità=" + fineValidità +
+                '}';
+    }
+
+
+
 }

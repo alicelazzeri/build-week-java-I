@@ -5,6 +5,8 @@ import it.epicode.entities.utenti.Utente;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity
 @Table (name = "abbonamenti")
@@ -69,6 +71,34 @@ public class Abbonamento extends TitoloDiViaggio {
 
     public void setTipoAbbonamento(TipoAbbonamento tipoAbbonamento) {
         this.tipoAbbonamento = tipoAbbonamento;
+    }
+
+    @Override
+    public LocalDate getDataEmissione() {
+        return dataEmissione;
+    }
+
+    @Override
+    public void setDataEmissione(LocalDate dataEmissione) {
+        this.dataEmissione = dataEmissione;
+    }
+
+    public LocalDate getDataScadenza() {
+        return dataScadenza;
+    }
+
+    public void setDataScadenza(LocalDate dataScadenza) {
+        this.dataScadenza = dataScadenza;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Abbonamento.class.getSimpleName() + "[", "]")
+                .add("id=" + getId())
+                .add("tipoAbbonamento=" + tipoAbbonamento)
+                .add("dataEmissione=" + dataEmissione)
+                .add("dataScadenza=" + dataScadenza)
+                .toString();
     }
 
 }
