@@ -62,7 +62,7 @@ public abstract class TitoloDiViaggio {
         return dataEmissione;
     }
 
-    public LocalDate setDataEmissione(LocalDate dataEmissione) {
-        return this.dataEmissione = dataEmissione;
+    public void setDataEmissione(LocalDate dataEmissione) {
+        this.dataEmissione = dataEmissione;
     }
 }
