@@ -29,32 +29,37 @@ public class Main {
         TitoloViaggioDAO titoloDAO = new TitoloViaggioDAO(em);
         DistributoreDAO disDao = new DistributoreDAO(em);
         UtentiDAO utDao = new UtentiDAO(em);
+        MezziDAO daoMezzi = new MezziDAO(em);
         RivenditoreAutorizzato r = new RivenditoreAutorizzato();
         DistributoreAutomatico d = new DistributoreAutomatico();
         Biglietto b = new Biglietto();
         Abbonamento a = new Abbonamento();
 
+        Biglietto bigl7 = new Biglietto(12345, d);
+        System.out.println("----------------BIGLIETTO SALVATO--------------");
+        titoloDAO.save(bigl7);
+        // daoMezzi.vidimaBiglietto(bigl7);
+
         Tratta tratta = new Tratta("Stazione Centrale", "Corso Italia", 20);
-        MezziDAO daoMezzi = new MezziDAO(em);
         //daoMezzi.saveTratta(tratta);
 
         Autobus autobus2 = new Autobus(100, StatoMezzo.IN_SERVIZIO,
                 LocalDate.of(2023, 3, 12),
                 LocalDate.of(2024, 7, 15),
                 tratta);
-        //daoMezzi.saveMezzo(autobus2);
+        daoMezzi.saveMezzo(autobus2);
 
         Tram tram3 = new Tram(120,StatoMezzo.IN_MANUTENZIONE,
                 LocalDate.now(),
                 LocalDate.of(2025,05,15));
 
-        //daoMezzi.saveMezzo(tram3);
+        daoMezzi.saveMezzo(tram3);
 
-//        LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
-//        LocalDate dataFinale = LocalDate.now();
-//            getBiglietti(titoloDAO, dataIniziale, dataFinale);
+        LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
+        LocalDate dataFinale = LocalDate.now();
+            getBiglietti(titoloDAO, dataIniziale, dataFinale);
 
-       emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao,daoMezzi,b,a);
+       // emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao,daoMezzi,b,a);
 
 //        var tessera = titoloDAO.cercaAbbonamentoPerTessera(1202);
 //        System.out.println("NUMERO TESSERA TROVATA");
@@ -144,7 +149,7 @@ public class Main {
                         break;
                 }
                 System.out.println("Vuoi acquistare altri biglietti o abbonamenti? (sì/no)");
-                System.out.println("---------------------------\n");
+                System.out.println("---------------------------");
                 input = scanner.nextLine().toLowerCase();
             } while (!input.equals("no"));
 
