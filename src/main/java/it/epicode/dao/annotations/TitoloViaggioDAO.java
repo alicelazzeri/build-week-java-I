@@ -64,7 +64,7 @@ public class TitoloViaggioDAO {
             if (b != null) {
                 em.remove(b);
                 trans.commit();
-                logger.debug("Biglietto eliminaro {}", b);
+                logger.debug("Biglietto eliminato {}", b);
             } else {
                 logger.debug("Biglietto non trovato {}", b);
             }

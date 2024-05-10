@@ -189,10 +189,10 @@ public class Main {
 
     public static void validitaAbbonamento (TitoloViaggioDAO titoloDAO, long tessera) {
         Abbonamento ricercaAbbonamento = titoloDAO.cercaAbbonamentoPerTessera(tessera);
-        if (ricercaAbbonamento.getDataScadenza().isAfter(LocalDate.now())) {
-            System.out.println("L'abbonamento è valido");
-        } else {
+        if (LocalDate.now().isAfter(ricercaAbbonamento.getDataScadenza())) {
             System.out.println("L'abbonamento non è valido");
+        } else {
+            System.out.println("L'abbonamento è valido");
         }
     }
 }
