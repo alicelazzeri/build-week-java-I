@@ -1,10 +1,12 @@
 package it.epicode;
 
 import com.github.javafaker.Faker;
-import it.epicode.dao.annotations.DistributoreDAO;
-import it.epicode.dao.annotations.MezziDAO;
-import it.epicode.dao.annotations.TitoloViaggioDAO;
-import it.epicode.dao.annotations.UtentiDAO;
+import it.epicode.dao.DistributoreDAO;
+import it.epicode.dao.MezziDAO;
+import it.epicode.dao.DistributoreDAO;
+import it.epicode.dao.MezziDAO;
+import it.epicode.dao.TitoloViaggioDAO;
+import it.epicode.dao.UtentiDAO;
 import it.epicode.entities.biglietti.*;
 import it.epicode.entities.mezzi.Autobus;
 import it.epicode.entities.mezzi.StatoMezzo;
@@ -58,8 +60,8 @@ public class Main {
 
         System.out.println("VALIDITA ABBONAMENTO");
         validitaAbbonamento(titoloDAO, 1202);
-
     }
+
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
 
     public static void emettiBiglietto(Distributore r,Distributore d, EntityManager em,Scanner scanner,
@@ -129,7 +131,7 @@ public class Main {
         }
     }
 
-    public static void ricevitoria(Distributore r,EntityManager em,TitoloViaggioDAO titoloDAO,DistributoreDAO disDao){
+    public static void ricevitoria(Distributore r, EntityManager em, TitoloViaggioDAO titoloDAO, DistributoreDAO disDao){
         Biglietto b = emettiBigliettoStandard(r,titoloDAO,em);
         r = new RivenditoreAutorizzato(b);
         disDao.save(r);

@@ -1,6 +1,5 @@
-package it.epicode.dao.annotations;
+package it.epicode.dao;
 
-import it.epicode.entities.biglietti.Distributore;
 import it.epicode.entities.utenti.Tessera;
 import it.epicode.entities.utenti.Utente;
 import jakarta.persistence.EntityManager;

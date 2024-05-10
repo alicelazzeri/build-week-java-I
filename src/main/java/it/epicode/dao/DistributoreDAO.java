@@ -1,5 +1,6 @@
-package it.epicode.dao.annotations;
+package it.epicode.dao;
 
+import it.epicode.dao.TitoloViaggioDAO;
 import it.epicode.entities.biglietti.Distributore;
 import jakarta.persistence.EntityManager;
 import org.slf4j.Logger;
