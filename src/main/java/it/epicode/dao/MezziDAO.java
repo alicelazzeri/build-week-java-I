@@ -6,9 +6,11 @@ import it.epicode.entities.mezzi.Mezzo;
 import it.epicode.entities.mezzi.Tratta;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.Period;
+import java.util.List;
 
 public class MezziDAO {
 
@@ -58,15 +60,32 @@ public class MezziDAO {
                 dao.deleteBiglietto(biglietto.getNumeroBiglietto());
                 dao.save(biglietto);
             }
-            //Query query = em.createQuery("SELECT ");
         } catch(Exception e) {
             logger.error("Errore nella vidimazione del biglietto", e);
         }
         return biglietto;
     }
 
+    public List<Mezzo> risultatiMezziPeriodoManutenzione () {
+        try {
+            List<Mezzo> query = em.createQuery("SELECT m FROM Mezzo a WHERE m.periodoManutenzione", Mezzo.class)
+                    .getResultList();
+            return query;
+        } catch (Exception e) {
+            logger.error("Errore nel recupero del risultato", e);
+        }
+        return null;
+    }
 
+    public List<Mezzo> risultatiMezziPeriodoServizio () {
+        try {
+            List<Mezzo> query = em.createQuery("SELECT m FROM Mezzo a WHERE m.periodoServizio", Mezzo.class)
+                    .getResultList();
+            return query;
+        } catch (Exception e) {
+            logger.error("Errore nel recupero del risultato", e);
+        }
+        return null;
+        }
+    }
 
-    // select b from titolidiviaggio where b.stato like 'non_vidimato' replace ["non _vidimato","vidimato]"
-
-}

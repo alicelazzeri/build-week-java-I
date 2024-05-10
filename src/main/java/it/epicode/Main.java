@@ -8,10 +8,7 @@ import it.epicode.dao.MezziDAO;
 import it.epicode.dao.TitoloViaggioDAO;
 import it.epicode.dao.UtentiDAO;
 import it.epicode.entities.biglietti.*;
-import it.epicode.entities.mezzi.Autobus;
-import it.epicode.entities.mezzi.StatoMezzo;
-import it.epicode.entities.mezzi.Tram;
-import it.epicode.entities.mezzi.Tratta;
+import it.epicode.entities.mezzi.*;
 import it.epicode.entities.utenti.Tessera;
 import it.epicode.entities.utenti.Utente;
 import jakarta.persistence.EntityManager;
@@ -19,6 +16,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -46,6 +45,7 @@ public class Main {
         Tram tram3 = new Tram(120,StatoMezzo.IN_MANUTENZIONE,
                 LocalDate.now(),
                 LocalDate.of(2025,05,15));
+
         //daoMezzi.saveMezzo(tram3);
 
 //        LocalDate dataIniziale = LocalDate.of(2024, 3, 25);
@@ -54,12 +54,18 @@ public class Main {
 
        //  emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao);
 
-        var tessera = titoloDAO.cercaAbbonamentoPerTessera(1202);
-        System.out.println("NUMERO TESSERA TROVATA");
-        System.out.println(tessera);
+//        var tessera = titoloDAO.cercaAbbonamentoPerTessera(1202);
+//        System.out.println("NUMERO TESSERA TROVATA");
+//        System.out.println(tessera);
+//
+//        System.out.println("VALIDITA ABBONAMENTO");
+//        validitaAbbonamento(titoloDAO, 1202);
 
-        System.out.println("VALIDITA ABBONAMENTO");
-        validitaAbbonamento(titoloDAO, 1202);
+        var mezziManutenzione = daoMezzi.risultatiMezziPeriodoManutenzione();
+        System.out.println(mezziManutenzione);
+
+        var mezziServizio =  daoMezzi.risultatiMezziPeriodoServizio();
+        System.out.println(mezziServizio);
     }
 
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");
