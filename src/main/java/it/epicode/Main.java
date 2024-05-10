@@ -241,11 +241,15 @@ public class Main {
     public static void vidimaBigliettoTram(MezziDAO mezziDao,Biglietto b){
         mezziDao.vidimaBiglietto(b);
     }
-    public static void vidimaBigliettoAuto(MezziDAO mezziDao,Biglietto b){}
+    public static void vidimaBigliettoAuto(MezziDAO mezziDao,Biglietto b){
+        mezziDao.vidimaBiglietto(b);
+    }
 
-    public static void vidimaAbbonamentoTram(MezziDAO mezziDao,Biglietto b){}
+    public static void vidimaAbbonamentoTram(MezziDAO mezziDao,Biglietto b){
+        mezziDao.vidimaBiglietto(b);
+    }
     public static void vidimaAbbonamentoAuto(MezziDAO mezziDao,Biglietto b){
-
+        mezziDao.vidimaBiglietto(b);
     }
 
 
