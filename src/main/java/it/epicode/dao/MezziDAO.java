@@ -9,6 +9,7 @@ import jakarta.persistence.EntityTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class MezziDAO {
         }
     }
 
-    public void saveTratta (Tratta tratta) {
+    public void saveTratta(Tratta tratta) {
         EntityTransaction trans = em.getTransaction();
         try {
             trans.begin();
@@ -60,15 +61,28 @@ public class MezziDAO {
                 dao.deleteBiglietto(biglietto.getNumeroBiglietto());
                 dao.save(biglietto);
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             logger.error("Errore nella vidimazione del biglietto", e);
         }
         return biglietto;
     }
 
-    public List<Mezzo> risultatiMezziPeriodoManutenzione () {
+//    public List<Mezzo> risultatiMezziPeriodoManutenzione () {
+//        try {
+//            List<Mezzo> query = em.createQuery("SELECT m FROM Mezzo a WHERE m.periodoManutenzione", Mezzo.class)
+//                    .getResultList();
+//            return query;
+//        } catch (Exception e) {
+//            logger.error("Errore nel recupero del risultato", e);
+//        }
+//        return null;
+//    }
+
+    public List<Mezzo> risultatiMezziPeriodoManutenzione() {
         try {
-            List<Mezzo> query = em.createQuery("SELECT m FROM Mezzo a WHERE m.periodoManutenzione", Mezzo.class)
+            LocalDate today = LocalDate.now();
+            List<Mezzo> query = em.createQuery("SELECT m FROM Mezzo m WHERE :today BETWEEN m.inizioPeriodoManutenzione AND m.finePeriodoManutenzione", Mezzo.class)
+                    .setParameter("today", today)
                     .getResultList();
             return query;
         } catch (Exception e) {
@@ -77,15 +91,29 @@ public class MezziDAO {
         return null;
     }
 
-    public List<Mezzo> risultatiMezziPeriodoServizio () {
+    public List<Mezzo> risultatiMezziPeriodoServizio() {
         try {
-            List<Mezzo> query = em.createQuery("SELECT m FROM Mezzo a WHERE m.periodoServizio", Mezzo.class)
+            LocalDate today = LocalDate.now();
+            List<Mezzo> query = em.createQuery("SELECT m FROM Mezzo m WHERE :today BETWEEN m.inizioPeriodoServizio AND m.finePeriodoServizio", Mezzo.class)
+                    .setParameter("today", today)
                     .getResultList();
             return query;
         } catch (Exception e) {
             logger.error("Errore nel recupero del risultato", e);
         }
         return null;
-        }
     }
+}
+
+//    public List<Mezzo> risultatiMezziPeriodoServizio () {
+//        try {
+//            List<Mezzo> query = em.createQuery("SELECT m FROM Mezzo a WHERE m.periodoServizio", Mezzo.class)
+//                    .getResultList();
+//            return query;
+//        } catch (Exception e) {
+//            logger.error("Errore nel recupero del risultato", e);
+//        }
+//        return null;
+//        }
+//    }
 
