@@ -54,7 +54,11 @@ public class Main {
 //        LocalDate dataFinale = LocalDate.now();
 //            getBiglietti(titoloDAO, dataIniziale, dataFinale);
 
-        emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao);
+       //  emettiBiglietto(r,d,em,scanner,titoloDAO,disDao,utDao);
+
+        var tessera = titoloDAO.cercaAbbonamentoPerTessera(1202);
+        System.out.println("NUMERO TESSERA TROVATA");
+        System.out.println(tessera);
 
     }
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblico");

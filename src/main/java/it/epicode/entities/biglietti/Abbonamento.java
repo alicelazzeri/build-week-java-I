@@ -30,7 +30,7 @@ public class Abbonamento extends TitoloDiViaggio {
         this.tipoAbbonamento = tipoAbbonamento;
         this.utente = utente;
         this.tessera = tessera;
-        super.setDataEmissione(LocalDate.now());
+        this.dataEmissione = LocalDate.now();
         this.dataScadenza = scadenzaAbbonamento(tipoAbbonamento);
     }
 

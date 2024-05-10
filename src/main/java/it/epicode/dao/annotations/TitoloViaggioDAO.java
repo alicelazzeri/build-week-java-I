@@ -1,6 +1,7 @@
 package it.epicode.dao.annotations;
 
 import it.epicode.dao.DistributoreDao;
+import it.epicode.entities.biglietti.Abbonamento;
 import it.epicode.entities.biglietti.Biglietto;
 import it.epicode.entities.biglietti.Distributore;
 import it.epicode.entities.biglietti.TitoloDiViaggio;
@@ -48,6 +49,18 @@ public class TitoloViaggioDAO {
         }
     }
 
+    public Abbonamento cercaAbbonamentoPerTessera (long tessera) {
+        try {
+            return em.createQuery("SELECT a FROM Abbonamento a WHERE a.tessera.id = :tessera", Abbonamento.class)
+                    .setParameter("tessera", tessera)
+                    .getSingleResult();
+        } catch (Exception e) {
+            logger.error("Tessera non trovata", e);
+            return null;
+        }
+
+    }
+
     public void deleteBiglietto(long numeroBiglietto) {
         EntityTransaction trans = em.getTransaction();
         try {
@@ -65,6 +78,7 @@ public class TitoloViaggioDAO {
             logger.error("Errore durante l'eliminazione del biglietto", e);
         }
     }
+
 
     public Long ricercaTitoliViaggioTotaliPerDistributore(LocalDate dataIniziale, LocalDate dataFinale) {
         Long query = em.createQuery("SELECT COUNT(b) FROM TitoloDiViaggio b WHERE b.dataEmissione BETWEEN :dataIniziale AND :dataFinale",Long.class)

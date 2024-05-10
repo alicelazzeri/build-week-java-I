@@ -28,6 +28,9 @@ public class Tessera {
         this.fineValidità =  inizioValidità.plusDays(365);
     }
 
+    public Tessera() {
+    }
+
     public long getId() {
         return id;
     }
